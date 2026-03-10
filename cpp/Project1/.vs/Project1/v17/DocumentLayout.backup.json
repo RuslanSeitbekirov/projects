@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\projects\\cpp\\Project1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1C7F836F-AC23-41F0-B22E-3BA33AB62D49}|Project1\\Project1.vcxproj|C:\\projects\\cpp\\Project1\\Project1\\zadanie.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{1C7F836F-AC23-41F0-B22E-3BA33AB62D49}|Project1\\Project1.vcxproj|solutionrelative:Project1\\zadanie.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C7F836F-AC23-41F0-B22E-3BA33AB62D49}|Project1\\Project1.vcxproj|C:\\Users\\Melvor\\Downloads\\data.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "zadanie.cpp",
+              "DocumentMoniker": "C:\\projects\\cpp\\Project1\\Project1\\zadanie.cpp",
+              "RelativeDocumentMoniker": "Project1\\zadanie.cpp",
+              "ToolTip": "C:\\projects\\cpp\\Project1\\Project1\\zadanie.cpp",
+              "RelativeToolTip": "Project1\\zadanie.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-16T06:16:13.28Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "data.txt",
+              "DocumentMoniker": "C:\\Users\\Melvor\\Downloads\\data.txt",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\Melvor\\Downloads\\data.txt",
+              "ToolTip": "C:\\Users\\Melvor\\Downloads\\data.txt",
+              "RelativeToolTip": "..\\..\\..\\Users\\Melvor\\Downloads\\data.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAABNAQAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-10-16T06:15:59.788Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
