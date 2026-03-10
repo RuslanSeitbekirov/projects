@@ -1,2 +1,19 @@
-# Игнорировать локальные настройки VS Code
 .vscode/
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
+
+# Игнорировать объектные файлы
+*.o
+*.obj
+
+# Игнорировать исполняемые файлы
+*.exe
+*.out
+*.app
+
+# Игнорировать временные файлы
+*.tmp
+*.temp
+*.log
+*.cache
