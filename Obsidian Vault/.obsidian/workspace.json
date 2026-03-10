@@ -1,0 +1,232 @@
+{
+  "main": {
+    "id": "c0df31c6a22b50b9",
+    "type": "split",
+    "children": [
+      {
+        "id": "e16050b24f1d9f04",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1028ab5ef6be0c22",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ОРГ/Лекция 2. 04.03.2026.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Лекция 2. 04.03.2026"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d1b1f41da2046ed7",
+    "type": "split",
+    "children": [
+      {
+        "id": "ebc6bd87518053ee",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a21faab67ccc94da",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Файловый менеджер"
+            }
+          },
+          {
+            "id": "a4b3589a1940dd61",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "IMG/Pasted image 20260217155921.png"
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20260217155921"
+            }
+          },
+          {
+            "id": "c0228e1aa3c5ce01",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "c1b1e539070732d9",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "b9eb4577907a3619",
+    "type": "split",
+    "children": [
+      {
+        "id": "e51ae94388e8dc99",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "96004a28e91f4b78",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "7c032022ec22d1ab",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "88dd5b116d35d032",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "0e959f09930f60e4",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "22e459f783ed04ed",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          },
+          {
+            "id": "e0b6fc3ec6d9ab44",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {},
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
+            }
+          }
+        ],
+        "currentTab": 5
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Меню быстрого перехода": false,
+      "graph:Граф": false,
+      "canvas:Создать новый холст": false,
+      "daily-notes:Сегодняшняя заметка": false,
+      "templates:Вставить шаблон": false,
+      "command-palette:Открыть палитру команд": false,
+      "bases:Создать новую базу": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false
+    }
+  },
+  "active": "1028ab5ef6be0c22",
+  "lastOpenFiles": [
+    "Untitled.base",
+    "ОРГ/Лекция 2. 04.03.2026.md",
+    "ОРГ",
+    "Welcome.md",
+    "Лабораторные по дискретке/Лабораторная 1 dfdf.md",
+    "IMG/зд_2.png.~tmp",
+    "IMG/зд_2.png",
+    "Лабораторные по дискретке/паб2.md",
+    "f/Добро пожаловать.md",
+    "Лабораторные по дискретке/Лабораторная 1.md",
+    "f",
+    "IMG/Pasted image 20260221153707.png",
+    "История России/Лекция 1 по Истории.md",
+    "История России/Конспект_лекции_по_древнерусской_истории_15_09.md",
+    "История России",
+    "Алгебра/Алгебра.md",
+    "Алгебра/Математика 15.09.md",
+    "Алгебра/Лекция 1 по Алгебре 1.md",
+    "Алгебра",
+    "лабораторные по дискретке/Лабораторная 1.md",
+    "IMG/Pasted image 20260217155921.png",
+    "IMG",
+    "лабораторные по дискретке"
+  ]
+}
