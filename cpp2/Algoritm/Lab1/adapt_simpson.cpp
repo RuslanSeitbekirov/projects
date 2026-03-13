@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-
+ 
 
 double f(double x) {
     return 1.0 / ((0.5 * sin(x) + 3 * cos(x)) * (0.5 * sin(x) + 3 * cos(x)));
@@ -35,7 +35,7 @@ int main() {
     cin >> a;
     cout << "Введите конец интервала(через точку): ";
     cin >> b;
-    cout << "Введите желаемую точность: ";
+    cout << "Введите желаемую точность(1e-4): ";
     cin >> eps;
     double result = simpson_adapt(f, a, b, eps);
 
