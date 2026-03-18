@@ -76,7 +76,7 @@ vector<double> conjugateGradient(const vector<vector<double>>& A, const vector<d
 }
 
 int main() {
-    // Пример: симметричная положительно определённая матрица
+    // Исходные данные
     vector<vector<double>> A = {
         {3, 1, -1},
         {-2, 4, 1},
