@@ -65,10 +65,9 @@ double gauss_kronrod(const function<double(double)>& f, double a, double b, doub
 
 // Пример использования
 int main() {
-    // Интегрируем функцию из лабораторной работы
+    // Интегрируем функцию
     auto f = [](double x) {
-        double denom = 0.5 * sin(x) + 3 * cos(x);
-        return 1.0 / (denom * denom);
+        return cos(3*x)/(1+0.7*cos(x));
     };
 
     double a, b;
@@ -78,7 +77,7 @@ int main() {
     cin >> b;
     double error;
 
-    double result = gauss_kronrod(f, a, b, error);
+    double result = gauss_kronrod(f, a, b, error); // error передается как ссылка
 
     cout << fixed << setprecision(12);
     cout << "Интеграл: " << result << endl;
