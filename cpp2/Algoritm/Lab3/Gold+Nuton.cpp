@@ -6,7 +6,7 @@ using namespace std;
 
 // Параметры по умолчанию
 const double EPS = 1e-12;        // точность
-const int MAX_ITER = 10000;        // максимальное число итераций
+const int MAX_ITER = 1000;        // максимальное число итераций
 
 // Золотое сечение: φ = (sqrt(5)-1)/2 ≈ 0.6180339887498949
 const double PHI = (sqrt(5.0) - 1.0) / 2.0;
@@ -51,8 +51,7 @@ double golden_section_root(function<double(double)> f, double a, double b, doubl
  * eps    – точность
  * max_it – максимальное число итераций
  */
-double newton_root(function<double(double)> f, function<double(double)> df,
-                   double x0, double eps = EPS, int max_it = MAX_ITER) {
+double newton_root(function<double(double)> f, function<double(double)> df, double x0, double eps = EPS, int max_it = MAX_ITER) {
     double x = x0;
     for (int iter = 0; iter < max_it; ++iter) {
         double fx = f(x);
@@ -74,9 +73,8 @@ double newton_root(function<double(double)> f, function<double(double)> df,
  * 1) локализация корня методом золотого сечения на отрезке [a, b];
  * 2) уточнение методом Ньютона, используя результат как начальное приближение.
  */
-double combined_root(function<double(double)> f, function<double(double)> df,
-                     double a, double b, double eps = EPS) {
-    double approx = golden_section_root(f, a, b, eps * 10); // грубое приближение
+double combined_root(function<double(double)> f, function<double(double)> df, double a, double b, double eps = EPS) {
+    double approx = golden_section_root(f, a, b, eps * 10); // грубое приближение для усеорения вычислений
     return newton_root(f, df, approx, eps);
 }
 
