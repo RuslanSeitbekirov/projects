@@ -3,13 +3,13 @@
 #include <cmath>
 #include <iomanip>
 
-using namespace std;
+using namespace std; 
 
 // Метод Зейделя для решения СЛАУ Ax = b
-vector<double> seidel(const vector<vector<double>>& A, const vector<double>& b, double eps = 1e-10, int maxIter = 1000) {
+vector<double> seidel(const vector<vector<double>>& A, const vector<double>& b, double eps = 1e-4, int maxIter = 200000) {
     int n = A.size();
     vector<double> x(n, 0.0); // начальное приближение
-    vector<double> x_new(n);
+    vector<double> x_new(n, 0.0);
 
     for (int iter = 0; iter < maxIter; ++iter) {
         // Одновременно обновляем компоненты, используя уже новые значения
@@ -25,6 +25,7 @@ vector<double> seidel(const vector<vector<double>>& A, const vector<double>& b, 
 
         // Проверка сходимости
         double error = 0.0;
+        cout << iter << "df" << error << endl;
         for (int i = 0; i < n; ++i) {
             error += fabs(x_new[i] - x[i]);
         }
@@ -39,11 +40,11 @@ vector<double> seidel(const vector<vector<double>>& A, const vector<double>& b, 
 int main() {
     // Исходные данные
     vector<vector<double>> A = {
-        {3, 1, -1},
-        {-2, 4, 1},
-        {1, 1, 3}
+        {5, 1, -1},
+        {-1, 3, -1},
+        {50, -2, 4}
     };
-    vector<double> b = {-1, 5, -3};
+    vector<double> b = {-5, 5, 1};
 
     try {
         vector<double> x = seidel(A, b);

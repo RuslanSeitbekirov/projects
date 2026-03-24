@@ -78,11 +78,11 @@ vector<double> conjugateGradient(const vector<vector<double>>& A, const vector<d
 int main() {
     // Исходные данные
     vector<vector<double>> A = {
-        {3, 1, -1},
-        {-2, 4, 1},
-        {1, 1, 3}
+        {5, 1, -1},
+        {-1, 3, -1},
+        {1, -2, 4}
     };
-    vector<double> b = {-1, 5, -3};
+    vector<double> b = {-5, 5, -1};
 
     try {
         vector<double> x = conjugateGradient(A, b);
