@@ -121,65 +121,65 @@
 // }
 
 // Ф3
-#include <iostream>
-using namespace std;
+// #include <iostream>
+// using namespace std;
 
-// Антиимпликация: x и не y (x ↛ y)
-bool antiImpl(bool x, bool y) {
-    return x && !y;
-}
+// // Антиимпликация: x и не y (x ↛ y)
+// bool antiImpl(bool x, bool y) {
+//     return x && !y;
+// }
 
-// Антирепликация: не x и y (обратная антиимпликация, y ↛ x)
-bool antiRepl(bool x, bool y) {
-    return !x && y;
-}
+// // Антирепликация: не x и y (обратная антиимпликация, y ↛ x)
+// bool antiRepl(bool x, bool y) {
+//     return !x && y;
+// }
 
-// Штрих Шефера | (NAND): не (x и y)
-bool nand(bool x, bool y) {
-    return !(x && y);
-}
+// // Штрих Шефера | (NAND): не (x и y)
+// bool nand(bool x, bool y) {
+//     return !(x && y);
+// }
 
-// Стрелка Пирса ↓ (NOR): не (x или y)
-bool nor(bool x, bool y) {
-    return !(x || y);
-}
+// // Стрелка Пирса ↓ (NOR): не (x или y)
+// bool nor(bool x, bool y) {
+//     return !(x || y);
+// }
 
-int over(int a, int b) {
-    if ((a + b) < 2)  {
-        return a + b;
-    } else {
-        return 0;
-    }
-}
+// int over(int a, int b) {
+//     if ((a + b) < 2)  {
+//         return a + b;
+//     } else {
+//         return 0;
+//     }
+// }
 
-void print(int a, int b){
-    a = 3;
-    cout << "| x | y | z | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | " << endl;
-    cout << "|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|" << endl;
-    for (int x = 0; x < 2; ++x) {
-        for (int y = 0; y < 2; ++y) {
-            for (int z = 0; z < 2; ++z) {
-                cout << "| " << x << " | " << y << " | " << z << " | "
-                    << (z || y) << " | " // 1
-                    << ((z || y) == x) << " | " // 2
-                    << !((z || y) == x) << " | " // 3                                 
-                    << antiImpl(!((z || y) == x), y) << " | " // 4
-                    << !(y) << " | " // 5
-                    << (z && x) << " | " // 6
-                    << over(!(y), (z && x)) << " | " // 7
-                    << nand(antiImpl(!((z || y) == x), y), over(!(y), (z && x))) << " | " << endl; // 8
-            }
-        }
-    }
+// void print(int a, int b){
+//     a = 3;
+//     cout << "| x | y | z | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | " << endl;
+//     cout << "|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|" << endl;
+//     for (int x = 0; x < 2; ++x) {
+//         for (int y = 0; y < 2; ++y) {
+//             for (int z = 0; z < 2; ++z) {
+//                 cout << "| " << x << " | " << y << " | " << z << " | "
+//                     << (z || y) << " | " // 1
+//                     << ((z || y) == x) << " | " // 2
+//                     << !((z || y) == x) << " | " // 3                                 
+//                     << antiImpl(!((z || y) == x), y) << " | " // 4
+//                     << !(y) << " | " // 5
+//                     << (z && x) << " | " // 6
+//                     << over(!(y), (z && x)) << " | " // 7
+//                     << nand(antiImpl(!((z || y) == x), y), over(!(y), (z && x))) << " | " << endl; // 8
+//             }
+//         }
+//     }
 
-}
+// }
 
-int main()
-{
-    int a = 1;
-    int b = 1;
-    print(a, b);
-}
+// int main()
+// {
+//     int a = 1;
+//     int b = 1;
+//     print(a, b);
+// }
 
 
 // //Ф4
