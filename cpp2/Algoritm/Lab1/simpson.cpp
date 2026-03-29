@@ -4,7 +4,7 @@
 using namespace std;
 
 double f(double x) {
-    return cos(3 * x) / (1 + 0.7 * cos(x));
+    return sin(x)*sin(x)/(13-12*cos(x));
 }
 
 // Функция вычисления интеграла методом Симпсона для заданного n (чётное)
@@ -31,7 +31,7 @@ int main() {
     cout << "Введите конец интервала: ";
     cin >> b;
 
-    const double eps = 1e-4;          // требуемая точность
+    const double eps = 1e-3;          // требуемая точность
     int n = 2;                        // начальное число разбиений (чётное)
     double I_old = simpson(a, b, n);  // интеграл при текущем n
     double I_new;

@@ -5,7 +5,7 @@
 using namespace std;
 
 // Параметры по умолчанию
-const double EPS = 1e-12;        // точность
+const double EPS = 1e-4;        // точность
 const int MAX_ITER = 1000;        // максимальное число итераций
 
 // Золотое сечение: φ = (sqrt(5)-1)/2 ≈ 0.6180339887498949
@@ -81,10 +81,10 @@ double combined_root(function<double(double)> f, function<double(double)> df, do
 // Пример использования
 int main() {
     // Задаём функцию и её производную
-    auto f = [](double x) -> double { return log(x)/log(10)-7/(2*x+6); };
-    auto df = [](double x) -> double { return (1/x*log(10))+(14/(2*x+6)*(2*x+6)); };
+    auto f = [](double x) -> double { return log(x)/log(10.0)-7.0/(2*x+6.0); };
+    auto df = [](double x) -> double { return 1.0 / (x * log(10.0)) - 14.0 / ((2*x+6.0)*(2*x+6.0)); };
 
-    double a = 0.0, b = 5;   // отрезок, где f(a)*f(b) < 0
+    double a = 1.0, b = 6.0;   // отрезок, где f(a)*f(b) < 0
 
     try {
         cout << fixed << setprecision(12);
