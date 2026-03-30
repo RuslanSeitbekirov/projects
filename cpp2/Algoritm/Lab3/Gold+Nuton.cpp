@@ -81,8 +81,8 @@ double combined_root(function<double(double)> f, function<double(double)> df, do
 // Пример использования
 int main() {
     // Задаём функцию и её производную
-    auto f = [](double x) -> double { return log(x)/log(10.0)-7.0/(2*x+6.0); };
-    auto df = [](double x) -> double { return 1.0 / (x * log(10.0)) - 14.0 / ((2*x+6.0)*(2*x+6.0)); };
+    auto f = [](double x) -> double { return log(x)/log(10)-7/(2*x+6); };
+    auto df = [](double x) -> double { return 14/((2*x+7)*(2*x+7))+1/log(10)*x; };
 
     double a = 1.0, b = 6.0;   // отрезок, где f(a)*f(b) < 0
 
