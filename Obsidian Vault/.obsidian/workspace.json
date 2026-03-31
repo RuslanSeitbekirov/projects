@@ -13,15 +13,30 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Лабораторная работа 3.md",
+                "file": "Алгебра/Математика 15.09.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Лабораторная работа 3"
+              "title": "Математика 15.09"
+            }
+          },
+          {
+            "id": "9f5668e6567963a7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ОРГ/Цитатный конспект. Пушкинская речь от достоевского..md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Цитатный конспект. Пушкинская речь от достоевского."
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -90,7 +105,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "b9eb4577907a3619",
@@ -189,7 +205,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -203,19 +220,24 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "fd4fd52856ddb80e",
+  "active": "9f5668e6567963a7",
   "lastOpenFiles": [
-    "Pasted image 20260320211641.png",
-    "Pasted image 20260320211637.png",
-    "Pasted image 20260320211634.png",
-    "Pasted image 20260320211515.png",
-    "Pasted image 20260320211440.png",
-    "Pasted image 20260320211412.png",
-    "Лабораторные по дискретке/Лабораторная 2.md",
-    "Pasted image 20260320210907.png",
-    "Pasted image 20260320210932.png",
-    "Лабораторная работа 3.md",
+    "Алгебра/Математика 15.09.md",
+    "ОРГ/Цитатный конспект. Пушкинская речь от достоевского..md",
+    "Без названия",
+    "Алгебра/Лекция 1 по Алгебре 1.md",
+    "Алгебра/Алгебра.md",
     "Лабораторные по дискретке/Лабораторная 1.md",
+    "Лабораторные по дискретке/Лабораторная 2.md",
+    "Лабораторные по дискретке/Лабораторная работа 3.md",
+    "IMG/Pasted image 20260320210907.png",
+    "IMG/Pasted image 20260320211641.png",
+    "IMG/Pasted image 20260320211637.png",
+    "Pasted image 20260320211634.png",
+    "IMG/Pasted image 20260320211515.png",
+    "Pasted image 20260320211440.png",
+    "IMG/Pasted image 20260320211412.png",
+    "Pasted image 20260320210932.png",
     "ОРГ/Лекция 2. 04.03.2026.md",
     "Лабораторные по дискретке/паб2.md",
     "Untitled.base",
@@ -229,12 +251,8 @@
     "История России/Лекция 1 по Истории.md",
     "История России/Конспект_лекции_по_древнерусской_истории_15_09.md",
     "История России",
-    "Алгебра/Алгебра.md",
-    "Алгебра/Математика 15.09.md",
-    "Алгебра/Лекция 1 по Алгебре 1.md",
     "Алгебра",
     "лабораторные по дискретке/Лабораторная 1.md",
-    "IMG/Pasted image 20260217155921.png",
     "IMG",
     "лабораторные по дискретке"
   ]

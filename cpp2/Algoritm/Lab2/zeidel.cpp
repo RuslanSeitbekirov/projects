@@ -42,7 +42,7 @@ int main() {
     vector<vector<double>> A = {
         {5, 1, -1},
         {-1, 3, -1},
-        {50, -2, 4}
+        {1, -2, 4}
     };
     vector<double> b = {-5, 5, 1};
 
