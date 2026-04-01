@@ -82,7 +82,7 @@ int main() {
         {-1, 3, -1},
         {1, -2, 4}
     };
-    vector<double> b = {-5, 5, -1};
+    vector<double> b = {-5, 5, 1};
 
     try {
         vector<double> x = conjugateGradient(A, b);
