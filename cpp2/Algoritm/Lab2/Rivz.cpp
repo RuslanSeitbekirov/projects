@@ -53,8 +53,7 @@ double norm(const vector<double>& v) {
 }
 
 // Метод сопряженных градиентов
-vector<double> conjugateGradient(const vector<vector<double>>& A, const vector<double>& b, 
-                                 double eps = 1e-10, int maxIter = 1000) {
+vector<double> conjugateGradient(const vector<vector<double>>& A, const vector<double>& b, double eps = 1e-10, int maxIter = 1000) {
     int n = A.size();
     vector<double> x(n, 0.0);          // начальное приближение
     vector<double> r = sub(b, matVec(A, x));
@@ -71,6 +70,7 @@ vector<double> conjugateGradient(const vector<vector<double>>& A, const vector<d
         double beta = rsnew / rsold;
         p = add(r, mul(beta, p));
         rsold = rsnew;
+        cout << iter << endl;
     }
     return x;
 }
@@ -78,9 +78,9 @@ vector<double> conjugateGradient(const vector<vector<double>>& A, const vector<d
 int main() {
     // Исходные данные
     vector<vector<double>> A = {
-        {5, 1, -1},
-        {-1, 3, -1},
-        {1, -2, 4}
+        {5, 1, 1},
+        {1, 3, 2},
+        {1, 2, 4}
     };
     vector<double> b = {-5, 5, 1};
 
