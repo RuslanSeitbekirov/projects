@@ -1,126 +1,248 @@
 #include <iostream>
 #include <vector>
-#include <cmath>
 #include <iomanip>
-
+#include <cmath>
+#include <algorithm>
+#include <string>
 using namespace std;
 
+// Структура для хранения коэффициентов кубического полинома на одном отрезке
 struct SplineSegment {
-    double a, b, c, d;   // коэффициенты полинома: a + b*(x-x_i) + c*(x-x_i)^2 + d*(x-x_i)^3
-    double x_left;       // левая граница интервала
+    double a, b, c, d;      // Коэффициенты: a + b*dx + c*dx^2 + d*dx^3 ||| a Задаёт высоту в начале, b Задаёт начальный наклон,
+    //  c Задаёт, как быстро меняется наклон, d Задаёт, как быстро меняется закругление
+    double x_left, x_right; // Границы отрезка [x_left, x_right]
+    
+    // Вывод формулы в читаемом виде
+    string get_formula() const {
+        ostringstream oss;
+        oss << fixed << setprecision(6);
+        oss << "S(x) = " << a;
+        if (b >= 0) oss << " + " << b << "*(x - " << x_left << ")";
+        else oss << " - " << -b << "*(x - " << x_left << ")";
+        if (c >= 0) oss << " + " << c << "*(x - " << x_left << ")^2";
+        else oss << " - " << -c << "*(x - " << x_left << ")^2";
+        if (d >= 0) oss << " + " << d << "*(x - " << x_left << ")^3";
+        else oss << " - " << -d << "*(x - " << x_left << ")^3";
+        return oss.str();
+    }
 };
 
-// Построение естественного кубического сплайна
-vector<SplineSegment> build_cubic_spline(const vector<double>& x, const vector<double>& y) {
-    int n = x.size();
-    if (n < 2) throw runtime_error("Недостаточно узлов");
+class CubicSpline {
+private:
+    vector<double> x, y;
+    vector<SplineSegment> segments;
 
-    vector<double> h(n - 1);
-    for (int i = 0; i < n - 1; ++i) h[i] = x[i + 1] - x[i];
-
-    // Вторые производные m (размер n), m[0] = m[n-1] = 0 (естественные условия)
-    vector<double> m(n, 0.0);
-
-    // Построение трёхдиагональной системы для m[1..n-2]
-    int N = n - 2; // число внутренних узлов
-    vector<double> diag(N, 0.0), sub(N - 1, 0.0), sup(N - 1, 0.0), rhs(N, 0.0);
-
-    for (int i = 1; i <= N; ++i) {
-        double hi = h[i];
-        double hi_1 = h[i - 1];
-        diag[i - 1] = 2.0 * (hi_1 + hi);
-        if (i - 2 >= 0) sub[i - 2] = hi_1;
-        if (i < N) sup[i - 1] = hi;
-        rhs[i - 1] = 6.0 * ((y[i + 1] - y[i]) / hi - (y[i] - y[i - 1]) / hi_1);
+    // Вспомогательная функция: найти индекс отрезка для точки
+    int find_segment(double x_val) const {
+        if (x_val < x.front() || x_val > x.back()) return -1;
+        int idx = upper_bound(x.begin(), x.end(), x_val) - x.begin() - 1;
+        if (idx >= static_cast<int>(segments.size())) idx = segments.size() - 1;
+        return idx;
     }
 
-    // Метод прогонки
-    vector<double> alpha(N, 0.0), beta(N, 0.0);
-    alpha[0] = sup[0] / diag[0];
-    beta[0] = rhs[0] / diag[0];
-    for (int i = 1; i < N - 1; ++i) {
-        double denom = diag[i] - sub[i - 1] * alpha[i - 1];
-        alpha[i] = sup[i] / denom;
-        beta[i] = (rhs[i] - sub[i - 1] * beta[i - 1]) / denom;
+public:
+    CubicSpline(const vector<double>& x_vals, const vector<double>& y_vals): 
+    x(x_vals), y(y_vals) { // записывает вектор точек в приватные x, y
+        build_spline();
     }
-    int last = N - 1;
-    double denom_last = diag[last] - sub[last - 1] * alpha[last - 1];
-    beta[last] = (rhs[last] - sub[last - 1] * beta[last - 1]) / denom_last;
 
-    vector<double> m_inner(N);
-    m_inner[last] = beta[last];
-    for (int i = last - 1; i >= 0; --i) {
-        m_inner[i] = beta[i] - alpha[i] * m_inner[i + 1];
-    }
-    for (int i = 1; i <= N; ++i) m[i] = m_inner[i - 1];
-
-    // Вычисление коэффициентов сплайнов на каждом интервале
-    vector<SplineSegment> segments(n - 1);
-    for (int i = 0; i < n - 1; ++i) {
-        double hi = h[i];
-        double a = y[i];
-        double b = (y[i + 1] - y[i]) / hi - hi * (2.0 * m[i] + m[i + 1]) / 6.0;
-        double c = m[i] / 2.0;
-        double d = (m[i + 1] - m[i]) / (6.0 * hi);
-        segments[i] = {a, b, c, d, x[i]};
-    }
-    return segments;
-}
-
-// Вычисление значения сплайна в точке x
-double spline_eval(const vector<SplineSegment>& segments, double x) {
-    for (const auto& seg : segments) {
-        double x_right = seg.x_left + (segments[0].x_left - segments[0].x_left); // не очень красиво, лучше определить отдельно
-        // Найдём нужный интервал (простой линейный поиск)
-    }
-    // Более корректный поиск:
-    int idx = -1;
-    for (size_t i = 0; i < segments.size(); ++i) {
-        double x_left = segments[i].x_left;
-        double x_right = (i + 1 < segments.size()) ? segments[i + 1].x_left : x_left + 0.04; // последний интервал
-        if (x >= x_left && x <= x_right) {
-            idx = i;
-            break;
+    // Метод построения сплайна (метод прогонки)
+    void build_spline() {
+        int n = x.size() - 1;
+        vector<double> c(n + 1);          // Вторые производные M_i
+        vector<double> alpha(n + 1), beta(n + 1);
+        
+        // Естественные граничные условия: S''(x0) = S''(xn) = 0
+        alpha[0] = 0; beta[0] = 0;
+        
+        // Прямой ход прогонки
+        for (int i = 1; i < n; ++i) {
+            double h_prev = x[i] - x[i - 1];
+            double h_curr = x[i + 1] - x[i];
+            double A = h_prev, B = 2 * (h_prev + h_curr), C = h_curr;
+            double F = 6 * ((y[i + 1] - y[i]) / h_curr - (y[i] - y[i - 1]) / h_prev);
+            
+            double delta = B - A * alpha[i - 1];
+            alpha[i] = -C / delta;
+            beta[i] = (F - A * beta[i - 1]) / delta;
+        }
+        
+        // Обратный ход
+        c[n] = 0;
+        for (int i = n - 1; i >= 0; --i) {
+            c[i] = alpha[i] * c[i + 1] + beta[i];
+        }
+        
+        // Вычисление коэффициентов полиномов
+        segments.resize(n);
+        for (int i = 0; i < n; ++i) {
+            double h = x[i + 1] - x[i];
+            segments[i].a = y[i];
+            segments[i].x_left = x[i];
+            segments[i].x_right = x[i + 1];
+            segments[i].c = c[i] / 2.0;
+            segments[i].d = (c[i + 1] - c[i]) / (6.0 * h);
+            segments[i].b = (y[i + 1] - y[i]) / h - h * (2.0 * c[i] + c[i + 1]) / 6.0;
         }
     }
-    if (idx == -1) throw runtime_error("Точка вне диапазона");
-    double dx = x - segments[idx].x_left;
-    return segments[idx].a + segments[idx].b * dx + segments[idx].c * dx * dx + segments[idx].d * dx * dx * dx;
-}
+
+    // Интерполяция в точке
+    double interpolate(double x_val) const {
+        //ищем в каком сигменте наш x
+        int idx = find_segment(x_val);
+        if (idx == -1) return NAN;
+        // берем коэфиценты из сегмента в котором наш и считаем
+        const SplineSegment& seg = segments[idx];
+        double dx = x_val - seg.x_left;
+        return seg.a + dx * (seg.b + dx * (seg.c + dx * seg.d)); // Схема Горнера
+    }
+
+    //Вывод формулы для отрезка, содержащего x_val
+    void print_formula_at(double x_val) const {
+        int idx = find_segment(x_val);
+        if (idx == -1) {
+            cout << " Точка x = " << x_val << " вне диапазона [" 
+                 << x.front() << ", " << x.back() << "]\n";
+            return;
+        }
+        const SplineSegment& seg = segments[idx];
+        cout << "\n Формула сплайна на отрезке [" << seg.x_left << ", " << seg.x_right << "]:\n";
+        cout << "   " << seg.get_formula() << "\n";
+        cout << "   где dx = (x - " << seg.x_left << ")\n";
+    }
+
+    //Детальная информация о сегменте
+    struct SegmentInfo {
+        int index;           // Номер отрезка
+        double x_left, x_right;
+        double a, b, c, d;   // Коэффициенты
+        bool valid;          // Флаг успешного поиска
+    };
+    
+    SegmentInfo get_segment_info(double x_val) const {
+        SegmentInfo info;
+        int idx = find_segment(x_val);
+        info.valid = (idx != -1);
+        if (info.valid) {
+            info.index = idx;
+            info.x_left = segments[idx].x_left;
+            info.x_right = segments[idx].x_right;
+            info.a = segments[idx].a;
+            info.b = segments[idx].b;
+            info.c = segments[idx].c;
+            info.d = segments[idx].d;
+        }
+        return info;
+    }
+
+    //Вывод всех коэффициентов сплайна (для отладки)
+    void print_all_coefficients() const {
+        cout << "\n Коэффициенты всех отрезков:\n";
+        cout << string(80, '-') << "\n";
+        cout << setw(12) << "Отрезок" 
+             << setw(12) << "a" 
+             << setw(12) << "b" 
+             << setw(12) << "c" 
+             << setw(12) << "d" << "\n";
+        cout << string(80, '-') << "\n";
+        for (size_t i = 0; i < segments.size(); ++i) {
+            const auto& s = segments[i];
+            cout << "[" << fixed << setprecision(2) << s.x_left << ", " << s.x_right << "] "
+                 << scientific << setprecision(4)
+                 << setw(12) << s.a << setw(12) << s.b 
+                 << setw(12) << s.c << setw(12) << s.d << "\n";
+        }
+        cout << string(80, '-') << "\n";
+    }
+};
 
 int main() {
-    // Узлы с шагом 0.04
-    vector<double> x_nodes = {1.00, 1.04, 1.08, 1.12, 1.16, 1.20};
-    // Значения e^x из таблицы (округлены до 4 знаков)
-    vector<double> y_nodes = {2.7183, 2.8292, 2.9447, 3.0649, 3.1899, 3.3201};
+    // Данные: колонка e^x из таблицы
+    // vector<double> x_data = {
+    //     1.00, 1.01, 1.02, 1.03, 1.04, 1.05, 1.06, 1.07, 1.08, 1.09,
+    //     1.10, 1.11, 1.12, 1.13, 1.14, 1.15, 1.16, 1.17, 1.18, 1.19, 1.20
+    // };
+    vector<double> x_data = {
+        1.00, 1.04, 1.08, 1.12, 1.16, 1.20
+    };
+    // vector<double> y_data = {
+    //     2.7183, 2.7456, 2.7732, 2.8011, 2.8292, 2.8577, 2.8864, 2.9154,
+    //     2.9447, 2.9743, 3.0042, 3.0344, 3.0649, 3.0957, 3.1268, 3.1582,
+    //     3.1899, 3.2220, 3.2544, 3.2871, 3.3201
+    // };
+    vector<double> y_data = {
+        2.7183, 2.8292, 2.9447, 3.0649, 3.1899, 3.3201
+    };
 
-    auto exact = [](double x) { return exp(x); };
+    CubicSpline spline(x_data, y_data);
 
-    try {
-        auto spline = build_cubic_spline(x_nodes, y_nodes);
-        vector<double> points = {1.05, 1.09, 1.13, 1.15, 1.17};
+    // Режим 1: Тестовые точки из задания
+    vector<double> query_points = {1.05, 1.09, 1.13, 1.15, 1.17};
+    
+    cout << fixed << setprecision(6);
+    cout << "\nРЕЖИМ 1: Проверка в заданных точках\n";
+    cout << string(90, '=') << "\n";
+    cout << "|" << setw(10) << "X" 
+         << "|" << setw(15) << "S(x)" 
+         << "|" << setw(15) << "e^x (exact)" 
+         << "|" << setw(15) << "Error" << "|\n";
+    cout << string(90, '-') << "\n";
+    
+    for (double xv : query_points) {
+        double s_val = spline.interpolate(xv);
+        double exact = exp(xv);
+        cout << "|" << setw(10) << xv 
+             << "|" << setw(15) << s_val 
+             << "|" << setw(15) << exact 
+             << "|" << scientific << setw(13) << abs(s_val - exact) << "|\n";
+    }
+    cout << string(90, '=') << "\n";
 
-        cout << fixed << setprecision(6);
-        cout << "Кубический сплайн (естественные граничные условия) для e^x\n";
-        cout << "Узлы: ";
-        for (double x : x_nodes) cout << x << " ";
-        cout << "\n\n";
-        cout << "x\t\tСплайн\t\tТочное e^x\tПогрешность\n";
-        for (double xp : points) {
-            double spl_val = spline_eval(spline, xp);
-            double exact_val = exact(xp);
-            double err = fabs(spl_val - exact_val);
-            cout << xp << "\t\t" << spl_val << "\t" << exact_val << "\t" << err << endl;
+    //a РЕЖИМ 2: Интерактивный запрос произвольной точки
+    cout << "\nРЕЖИМ 2: Произвольная точка\n";
+    cout << "Введите x для вычисления (или 'q' для выхода, диапазон [1.00, 1.20]):\n";
+    
+    string input;
+    while (true) {
+        cout << "\nx = ";
+        cin >> input;
+        
+        // Проверка на выход
+        if (input == "q" || input == "Q") break;
+        
+        try {
+            double x_query = stod(input);
+            
+            // Вычисление значения
+            double result = spline.interpolate(x_query);
+            
+            if (isnan(result)) {
+                cout << " Ошибка: x = " << x_query << " вне диапазона [1.00, 1.20]\n";
+                continue;
+            }
+            
+            // Вывод результата
+            cout << fixed << setprecision(8);
+            cout << " S(" << x_query << ") = " << result << "\n";
+            cout << "   e^(" << x_query << ')' << " = " << exp(x_query) << "\n";
+            cout << "   Погрешность: " << scientific << abs(result - exp(x_query)) << "\n";
+            
+            // 🔹 Вывод формулы для этого отрезка
+            spline.print_formula_at(x_query);
+            
+            // 🔹 Детальная информация о коэффициентах
+            auto info = spline.get_segment_info(x_query);
+            if (info.valid) {
+                cout << "\n Коэффициенты полинома на этом отрезке:\n";
+                cout << "   a = " << fixed << setprecision(8) << info.a << "  (y_i)\n";
+                cout << "   b = " << info.b << "  (первая производная в левой границе)\n";
+                cout << "   c = " << info.c << "  (вторая производная / 2)\n";
+                cout << "   d = " << info.d << "  (третья производная / 6)\n";
+            }
+            
+        } catch (const exception& e) {
+            cout << "Неверный ввод. Попробуйте число или 'q' для выхода.\n";
         }
-
-        // Проверка в узлах
-        cout << "\nПроверка в узлах:\n";
-        for (size_t i = 0; i < x_nodes.size(); ++i) {
-            double spl_val = spline_eval(spline, x_nodes[i]);
-            cout << "x=" << x_nodes[i] << ", сплайн=" << spl_val << ", исходное y=" << y_nodes[i] << endl;
-        }
-    } catch (const exception& e) {
-        cerr << "Ошибка: " << e.what() << endl;
     }
     return 0;
 }

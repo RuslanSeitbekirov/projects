@@ -82,18 +82,12 @@ double combined_root(function<double(double)> f, function<double(double)> df, do
 int main() {
     // Задаём функцию и её производную
     auto f = [](double x) -> double { return log(x)/log(10)-7/(2*x+6); };
-    auto df = [](double x) -> double { return 14/((2*x+7)*(2*x+7))+1/log(10)*x; };
+    auto df = [](double x) -> double { return 14/((2*x+6)*(2*x+6))+1/(log(10)*x); };
 
-    double a = 1.0, b = 6.0;   // отрезок, где f(a)*f(b) < 0
+    double a = 3.4, b = 5.0;   // отрезок, где f(a)*f(b) < 0
 
     try {
         cout << fixed << setprecision(12);
-
-        // 1. Метод золотого сечения
-        double root_gs = golden_section_root(f, a, b);
-        cout << "Метод золотого сечения:\n";
-        cout << "Корень = " << root_gs << "\n";
-        cout << "f(корень) = " << f(root_gs) << "\n\n";
 
         // 2. Метод Ньютона (начальное приближение – середина отрезка)
         double root_newton = newton_root(f, df, (a + b) / 2.0);
