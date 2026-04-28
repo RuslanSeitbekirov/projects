@@ -547,6 +547,118 @@
 // }
 
 
+// #include <iostream>
+// using namespace std;
+
+// // Антиимпликация: x и не y (x ↛ y)
+// bool antiImpl(bool x, bool y) {
+//     return x && !y;
+// }
+
+// // Антирепликация: не x и y (обратная антиимпликация, y ↛ x)
+// bool antiRepl(bool x, bool y) {
+//     return !x && y;
+// }
+
+// // Штрих Шефера | (NAND): не (x и y)
+// bool nand(bool x, bool y) {
+//     return !(x && y);
+// }
+
+// // Стрелка Пирса ↓ (NOR): не (x или y)
+// bool nor(bool x, bool y) {
+//     return !(x || y);
+// }
+
+// int over(int a, int b) {
+//     if ((a + b) < 2)  {
+//         return a + b;
+//     } else {
+//         return 0;
+//     }
+// }
+
+// void print(int a, int b){
+//     a = 3;
+//     cout << "| x1 | x2 | x3 | 1 | 2 | 3 | 4 |" << endl;
+//     cout << "|:-:|:-:|:-:|:-:|:-:|:-:|:-:|" << endl;
+//     for (int x = 0; x < 2; ++x) {
+//         for (int y = 0; y < 2; ++y) {
+//             for (int z = 0; z < 2; ++z) {
+//                 cout << "| " << x << " | " << y << " | " << z << " | "
+//                     << (x || !(y) || z) << " | " // 1
+//                     << (x || !(y) || !(z)) << " | " // 2
+//                     << (!(x) || y || z) << " | " // 3                                 
+//                     << over(nand(nor(z, y),x),(x && (y >= z))) << " | " << endl; // 4
+//             }
+//         }
+//     }
+
+// }
+
+// int main()
+// {
+//     int a = 1;
+//     int b = 1;
+//     print(a, b);
+// }
+
+
+// #include <iostream>
+// using namespace std;
+
+// // Антиимпликация: x и не y (x ↛ y)
+// bool antiImpl(bool x, bool y) {
+//     return x && !y;
+// }
+
+// // Антирепликация: не x и y (обратная антиимпликация, y ↛ x)
+// bool antiRepl(bool x, bool y) {
+//     return !x && y;
+// }
+
+// // Штрих Шефера | (NAND): не (x и y)
+// bool nand(bool x, bool y) {
+//     return !(x && y);
+// }
+
+// // Стрелка Пирса ↓ (NOR): не (x или y)
+// bool nor(bool x, bool y) {
+//     return !(x || y);
+// }
+
+// int over(int a, int b) {
+//     if ((a + b) < 2)  {
+//         return a + b;
+//     } else {
+//         return 0;
+//     }
+// }
+
+// void print(int a, int b){
+//     a = 3;
+//     cout << "| x1 | x2 | x3 | 1 | 2 | 3 | 4 |" << endl;
+//     cout << "|:-:|:-:|:-:|:-:|:-:|:-:|:-:|" << endl;
+//     for (int x = 0; x < 2; ++x) {
+//         for (int y = 0; y < 2; ++y) {
+//             for (int z = 0; z < 2; ++z) {
+//                 cout << "| " << x << " | " << y << " | " << z << " | "
+//                     << (!(x)&& y) << " | " // 1
+//                     << (!(x)&& z) << " | " // 2
+//                     << (y && z) << " | " // 3                                 
+//                     << ((!(x)&& y) || (!(x)&& z) || (y && z)) << " | " << endl; // 4
+//             }
+//         }
+//     }
+
+// }
+
+// int main()
+// {
+//     int a = 1;
+//     int b = 1;
+//     print(a, b);
+// }
 #include <iostream>
 using namespace std;
 
@@ -580,16 +692,17 @@ int over(int a, int b) {
 
 void print(int a, int b){
     a = 3;
-    cout << "| x1 | x2 | x3 | 1 | 2 | 3 | 4 |" << endl;
-    cout << "|:-:|:-:|:-:|:-:|:-:|:-:|:-:|" << endl;
+    cout << "| x1 | x2 | x3 | 1 | 2 | 3 | 4 | 5 |" << endl;
+    cout << "|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|" << endl;
     for (int x = 0; x < 2; ++x) {
         for (int y = 0; y < 2; ++y) {
             for (int z = 0; z < 2; ++z) {
                 cout << "| " << x << " | " << y << " | " << z << " | "
-                    << (x || !(y) || z) << " | " // 1
-                    << (x || !(y) || !(z)) << " | " // 2
-                    << (!(x) || y || z) << " | " // 3                                 
-                    << over(nand(nor(z, y),x),(x && (y >= z))) << " | " << endl; // 4
+                    << (!x<=!z) << " | " // 1
+                    << !(y<=!z) << " | " // 2
+                    << ((!x<=!z)<=!(y<=!z)) << " | " // 3                                 
+                    << (!x<=!y) << " | "  // 4
+                    << ((!x<=!y)<=((!x<=!z)<=!(y<=!z))) << " | " << endl; // 5
             }
         }
     }
