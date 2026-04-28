@@ -12,7 +12,7 @@ std::optional<double> quadratic_interpolation_min_direct(double x1, double x2, d
     std::cout << std::string(80, '=') << "\n";
     std::cout << "ПРЯМАЯ КВАДРАТИЧНАЯ ИНТЕРПОЛЯЦИЯ (поиск минимума)\n";
     std::cout << std::string(80, '=') << "\n\n";
-
+ 
     // Фиксируем формат вывода для таблицы
     std::cout << std::fixed << std::setprecision(6);
     std::cout << "Начальные точки: x1=" << x1 << ", x2=" << x2 << ", x3=" << x3 << "\n";

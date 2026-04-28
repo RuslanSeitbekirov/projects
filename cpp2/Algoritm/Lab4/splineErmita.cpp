@@ -43,26 +43,25 @@ HermitePolynomial hermite_interpolation(const std::vector<double>& x_nodes,
 
     // Заполняем первый столбец значениями функции
     for (size_t i = 0; i < n; ++i) {
-        Q[2*i][0]     = y_nodes[i];
-        Q[2*i + 1][0] = y_nodes[i];
+        Q[2*i][0]     = y_nodes[i]; // первое вхождение: для f(x)
+        Q[2*i + 1][0] = y_nodes[i]; // второе вхождение: для f'(x)
     }
 
-    // 3. Вычисляем разделённые разности
-    for (size_t j = 1; j < m; ++j) {
-        for (size_t i = j; i < m; ++i) {
+    // 3. Вычисляем разделённые разности (диагоняль == коэффициенты полинома)
+    for (size_t j = 1; j < m; ++j) { // по столбцам
+        for (size_t i = j; i < m; ++i) { // по строкам
             if (std::abs(z[i] - z[i - j]) < eps) {
                 // Совпадающие узлы: используем производную (только для j==1)
                 if (j == 1) {
                     size_t original_idx = i / 2;  // индекс исходного узла
-                    Q[i][j] = y_deriv_nodes[original_idx];
+                    Q[i][j] = y_deriv_nodes[original_idx]; // если нынешнее у == предыдущему у
                 } else {
                     // Для высших порядков при совпадении — 0
-                    // (в полной реализации здесь нужны пределы/рекуррентные формулы)
                     Q[i][j] = 0.0;
                 }
             } else {
-                // Стандартная формула разделённых разностей
-                Q[i][j] = (Q[i][j-1] - Q[i-1][j-1]) / (z[i] - z[i - j]);
+                // Стандартная формула разделённых разностей(произовдная производной)
+                Q[i][j] = (Q[i][j-1] - Q[i-1][j-1]) / (z[i] - z[i - j]); // если они разные
             }
         }
     }
@@ -82,9 +81,7 @@ HermitePolynomial hermite_interpolation(const std::vector<double>& x_nodes,
 // ============================================================================
 // ВЫЧИСЛЕНИЕ ЗНАЧЕНИЯ ПОЛИНОМА (схема Горнера)
 // ============================================================================
-double eval_hermite(const std::vector<double>& z,
-                    const std::vector<double>& coefficients,
-                    double x_val) {
+double eval_hermite(const std::vector<double>& z, const std::vector<double>& coefficients, double x_val) {
     const size_t n = coefficients.size();
     double result = coefficients[n - 1];
 
@@ -93,12 +90,10 @@ double eval_hermite(const std::vector<double>& z,
     }
     return result;
 }
-
 // ============================================================================
 // ВЫВОД КОЭФФИЦИЕНТОВ
 // ============================================================================
-void print_hermite_coefficients(const std::vector<double>& z,
-                                const std::vector<double>& coefficients) {
+void print_hermite_coefficients(const std::vector<double>& z, const std::vector<double>& coefficients) {
     std::cout << "\n" << std::string(80, '=') << "\n";
     std::cout << "КОЭФФИЦИЕНТЫ ПОЛИНОМА ЭРМИТА (разделённые разности)\n";
     std::cout << std::string(80, '=') << "\n";
