@@ -46,7 +46,7 @@ double MyFunc      (double x) { return (x == 0.0) ? 1.0 : std::sin(x) / x; }
 //  2. FFT — алгоритм Кули-Тьюки (рекурсивный, основание 2)
 //
 //  Вход:  a — вектор комплексных чисел, длина обязана быть степенью 2
-//  invert = false → прямое ДПФ
+//  invert = false → прямое ДПФ (Дискретное преобразование Фурье)
 //  invert = true  → обратное ДПФ (ОДПФ)
 // ============================================================
 void fft(std::vector<cd>& a, bool invert) {
@@ -129,7 +129,10 @@ double simpson(std::function<double(double)> f, double a, double b, int n = 1000
     return s * h / 3.0;
 }
 
-struct FourierCoeffs { double a0; std::vector<double> an, bn; };
+struct FourierCoeffs { 
+    double a0;
+    std::vector<double> an, bn; 
+};
 
 FourierCoeffs computeFourier(std::function<double(double)> f,
                               double L, int N, int sN = 2000) {
@@ -160,11 +163,8 @@ double fourierSum(const FourierCoeffs& c, double L, double x) {
 //   '~' — IFFT(FFT(f))  (восстановление через БПФ)
 //   '@' — совпадение двух кривых
 // ============================================================
-void plotASCII(std::function<double(double)> f,
-               const FourierCoeffs& fc,
-               const std::vector<cd>& fftSpec,
-               double L,
-               int cols = 72, int rows = 26) {
+void plotASCII(std::function<double(double)> f, const FourierCoeffs& fc, const std::vector<cd>& fftSpec,
+               double L, int cols = 72, int rows = 26) {
 
     int M = static_cast<int>(fftSpec.size());
     double a = -L, b = L;
@@ -299,10 +299,9 @@ int main() {
     struct Entry { const char* name; std::function<double(double)> fn; };
     std::vector<Entry> FUNCTIONS = {
         { "Прямоугольный меандр",  funcSquareWave },
-        { "Пилообразная f(x)=x",   funcSawtooth   },
+        { "Пилообразная f(x)=x",   funcSawtooth   }, // ряд прямоуг треугольников
         { "Парабола f(x)=x²",      funcParabola   },
         { "f(x) = |x|",            funcAbsX       },
-        { "Треугольная волна",      funcTriangle   },
         { "Sinc  f(x)=sin(x)/x",   funcSinc       },
         { "Моя функция = ", MyFunc },
     };

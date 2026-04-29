@@ -697,12 +697,16 @@ void print(int a, int b){
     for (int x = 0; x < 2; ++x) {
         for (int y = 0; y < 2; ++y) {
             for (int z = 0; z < 2; ++z) {
+                bool T1 = antiImpl(antiImpl(1, x), antiImpl(1, y));
+                bool T2 = antiImpl(antiImpl(1, x), antiImpl(1, z));
+                bool T3 = antiImpl(y, antiImpl(1, z));
                 cout << "| " << x << " | " << y << " | " << z << " | "
-                    << (!x<=!z) << " | " // 1
-                    << !(y<=!z) << " | " // 2
-                    << ((!x<=!z)<=!(y<=!z)) << " | " // 3                                 
-                    << (!x<=!y) << " | "  // 4
-                    << ((!x<=!y)<=((!x<=!z)<=!(y<=!z))) << " | " << endl; // 5
+                    << antiImpl(1, T1) << " | " // 1
+                    << antiImpl(antiImpl(1, T1), T2) << " | " // 2
+                    << antiImpl(1, antiImpl(antiImpl(1, T1), T2)) << " | " // 3                                 
+                    << antiImpl(1, antiImpl(1, antiImpl(antiImpl(1, T1), T2))) << " | "  // 4
+                    << antiImpl(antiImpl(1, antiImpl(1, antiImpl(antiImpl(1, T1), T2))), T3) << " | "  // 5
+                    << antiImpl(1, antiImpl(antiImpl(1, antiImpl(1, antiImpl(antiImpl(1, T1), T2))), T3)) << " | " << endl; // 6
             }
         }
     }

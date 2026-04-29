@@ -11,14 +11,14 @@ using namespace std;
 //  Метод Симпсона для численного интегрирования
 // ============================================================
 double simpson(std::function<double(double)> f, double a, double b, int n = 1000) {
-    if (n % 2 != 0) n++;
-    double h = (b - a) / n;
-    double result = f(a) + f(b);
-    for (int i = 1; i < n; i++) {
-        double x = a + i * h;
-        result += (i % 2 == 0 ? 2.0 : 4.0) * f(x);
+    if (n % 2 != 0) n++; //Шаг 1: Гарантируем чётное n
+    double h = (b - a) / n; // Шаг 2: Вычисляем шаг сетки
+    double result = f(a) + f(b); //  Шаг 3: Начинаем с краёв (коэфф. = 1)
+    for (int i = 1; i < n; i++) { //Шаг 4: Проходим по внутренним точкам
+        double x = a + i * h; // Текущая точка
+        result += (i % 2 == 0 ? 2.0 : 4.0) * f(x); //  Шаг 5: Применяем паттерн 4-2-4-2...
     }
-    return result * h / 3.0;
+    return result * h / 3.0; // Шаг 6: Финальный множитель h/3
 }
 
 // ============================================================
@@ -33,10 +33,14 @@ struct FourierCoeffs {
 FourierCoeffs computeFourier(std::function<double(double)> f,
                               double L, int N, int simpsonN = 2000) {
     FourierCoeffs c;
-    c.a0 = (1.0 / L) * simpson(f, -L, L, simpsonN);
+    //Вычисляем a₀ (среднее значение функции)
+    c.a0 = (1.0 / L) * simpson(f, -L, L, simpsonN);// [-L, L] интервал; simpsonN
+    //Вычисляем aₙ и bₙ для n = 1...N
     for (int n = 1; n <= N; n++) {
+        // aₙ: интеграл от f(x)·cos(nπx/L)
         c.an.push_back((1.0 / L) * simpson(
             [&](double x){ return f(x) * std::cos(n * M_PI * x / L); }, -L, L, simpsonN));
+        // bₙ: интеграл от f(x)·sin(nπx/L)
         c.bn.push_back((1.0 / L) * simpson(
             [&](double x){ return f(x) * std::sin(n * M_PI * x / L); }, -L, L, simpsonN));
     }
@@ -44,11 +48,12 @@ FourierCoeffs computeFourier(std::function<double(double)> f,
 }
 
 double fourierSum(const FourierCoeffs& c, double L, double x) {
-    double s = c.a0 / 2.0;
+    double s = c.a0 / 2.0; // Постоянная составляющая; a0 не целое и не вектор 
     int N = static_cast<int>(c.an.size());
     for (int n = 1; n <= N; n++)
-        s += c.an[n-1] * std::cos(n * M_PI * x / L)
-           + c.bn[n-1] * std::sin(n * M_PI * x / L);
+    // Добавляем n-ю гармонику
+        s += c.an[n-1] * std::cos(n * M_PI * x / L) // косинусная часть
+           + c.bn[n-1] * std::sin(n * M_PI * x / L); // синусная часть
     return s;
 }
 
@@ -186,7 +191,7 @@ void printCoeffs(const FourierCoeffs& c, int N) {
 void printComparison(std::function<double(double)> f,
                      const FourierCoeffs& c, double L, int points = 10) {
     std::cout << "\n--- Сравнение f(x) и S_N(x) ---\n";
-    std::cout << std::setw(10) << "x"
+    std::cout << std::setw(10) << "      x"
               << std::setw(14) << "f(x)"
               << std::setw(14) << "S_N(x)"
               << std::setw(14) << "|погрешность|" << "\n";
