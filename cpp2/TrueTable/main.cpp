@@ -661,8 +661,11 @@
 // }
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 57b8924e93a262b17582496df277ecba0d802aad
 // #include <iostream>
 // using namespace std;
 
@@ -765,8 +768,13 @@ bool con(int a, int b){
 
 void print(int a, int b){
     a = 3;
+<<<<<<< HEAD
     cout << "|x1 |x2 |x3 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |" << endl;
     cout << "|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|" << endl;
+=======
+    cout << "| x1 | x2 | x3 | 1 | 2 | 3 |" << endl;
+    cout << "|:-:|:-:|:-:|:-:|:-:|:-:|" << endl;
+>>>>>>> 57b8924e93a262b17582496df277ecba0d802aad
     for (int x = 0; x < 2; ++x) {
         for (int y = 0; y < 2; ++y) {
             for (int z = 0; z < 2; ++z) {
@@ -774,6 +782,7 @@ void print(int a, int b){
                 bool T2 = antiImpl(antiImpl(1, x), antiImpl(1, z));
                 bool T3 = antiImpl(y, antiImpl(1, z));
                 cout << "| " << x << " | " << y << " | " << z << " | "
+<<<<<<< HEAD
                     << over(y, z) << " | " // 1
                     << con(y, z) << " | " // 2
                     << con(x, z) << " | " // 3                                 
@@ -781,6 +790,11 @@ void print(int a, int b){
                     << con(x, y) << " | "  // 5
                     << over(over(con(y, z), con(x, z)), con(x, y)) << " | "  // 6
                     << over(over(y, z), over(over(con(y, z), con(x, z)), con(x, y))) << " | " << endl; // 7
+=======
+                    << (x && !y) << " | " // 1
+                    << (!z) << " | " // 2                               
+                    << (!z || (x && !y)) << " | " << endl; // 6
+>>>>>>> 57b8924e93a262b17582496df277ecba0d802aad
             }
         }
     } 
