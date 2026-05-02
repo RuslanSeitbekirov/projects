@@ -659,6 +659,71 @@
 //     int b = 1;
 //     print(a, b);
 // }
+
+
+
+
+// #include <iostream>
+// using namespace std;
+
+// // Антиимпликация: x и не y (x ↛ y)
+// bool antiImpl(bool x, bool y) {
+//     return x && !y;
+// }
+
+// // Антирепликация: не x и y (обратная антиимпликация, y ↛ x)
+// bool antiRepl(bool x, bool y) {
+//     return !x && y;
+// }
+
+// // Штрих Шефера | (NAND): не (x и y)
+// bool nand(bool x, bool y) {
+//     return !(x && y);
+// }
+
+// // Стрелка Пирса ↓ (NOR): не (x или y)
+// bool nor(bool x, bool y) {
+//     return !(x || y);
+// }
+
+// int over(int a, int b) {
+//     if ((a + b) < 2)  {
+//         return a + b;
+//     } else {
+//         return 0;
+//     }
+// }
+
+// void print(int a, int b){
+//     a = 3;
+//     cout << "| x1 | x2 | x3 | 1 | 2 | 3 | 4 | 5 |" << endl;
+//     cout << "|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|" << endl;
+//     for (int x = 0; x < 2; ++x) {
+//         for (int y = 0; y < 2; ++y) {
+//             for (int z = 0; z < 2; ++z) {
+//                 bool T1 = antiImpl(antiImpl(1, x), antiImpl(1, y));
+//                 bool T2 = antiImpl(antiImpl(1, x), antiImpl(1, z));
+//                 bool T3 = antiImpl(y, antiImpl(1, z));
+//                 cout << "| " << x << " | " << y << " | " << z << " | "
+//                     << antiImpl(1, T1) << " | " // 1
+//                     << antiImpl(antiImpl(1, T1), T2) << " | " // 2
+//                     << antiImpl(1, antiImpl(antiImpl(1, T1), T2)) << " | " // 3                                 
+//                     << antiImpl(1, antiImpl(1, antiImpl(antiImpl(1, T1), T2))) << " | "  // 4
+//                     << antiImpl(antiImpl(1, antiImpl(1, antiImpl(antiImpl(1, T1), T2))), T3) << " | "  // 5
+//                     << antiImpl(1, antiImpl(antiImpl(1, antiImpl(1, antiImpl(antiImpl(1, T1), T2))), T3)) << " | " << endl; // 6
+//             }
+//         }
+//     }
+
+// }
+
+// int main()
+// {
+//     int a = 1;
+//     int b = 1;
+//     print(a, b);
+// }
+
 #include <iostream>
 using namespace std;
 
@@ -690,10 +755,18 @@ int over(int a, int b) {
     }
 }
 
+bool Const(int a){
+    return (a <= a);
+}
+
+bool con(int a, int b){
+    return over((a <= over(b, Const(a))),Const(a));
+}
+
 void print(int a, int b){
     a = 3;
-    cout << "| x1 | x2 | x3 | 1 | 2 | 3 | 4 | 5 |" << endl;
-    cout << "|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|" << endl;
+    cout << "|x1 |x2 |x3 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |" << endl;
+    cout << "|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|" << endl;
     for (int x = 0; x < 2; ++x) {
         for (int y = 0; y < 2; ++y) {
             for (int z = 0; z < 2; ++z) {
@@ -701,15 +774,16 @@ void print(int a, int b){
                 bool T2 = antiImpl(antiImpl(1, x), antiImpl(1, z));
                 bool T3 = antiImpl(y, antiImpl(1, z));
                 cout << "| " << x << " | " << y << " | " << z << " | "
-                    << antiImpl(1, T1) << " | " // 1
-                    << antiImpl(antiImpl(1, T1), T2) << " | " // 2
-                    << antiImpl(1, antiImpl(antiImpl(1, T1), T2)) << " | " // 3                                 
-                    << antiImpl(1, antiImpl(1, antiImpl(antiImpl(1, T1), T2))) << " | "  // 4
-                    << antiImpl(antiImpl(1, antiImpl(1, antiImpl(antiImpl(1, T1), T2))), T3) << " | "  // 5
-                    << antiImpl(1, antiImpl(antiImpl(1, antiImpl(1, antiImpl(antiImpl(1, T1), T2))), T3)) << " | " << endl; // 6
+                    << over(y, z) << " | " // 1
+                    << con(y, z) << " | " // 2
+                    << con(x, z) << " | " // 3                                 
+                    << over(con(y, z), con(x, z)) << " | "  // 4
+                    << con(x, y) << " | "  // 5
+                    << over(over(con(y, z), con(x, z)), con(x, y)) << " | "  // 6
+                    << over(over(y, z), over(over(con(y, z), con(x, z)), con(x, y))) << " | " << endl; // 7
             }
         }
-    }
+    } 
 
 }
 
@@ -719,4 +793,3 @@ int main()
     int b = 1;
     print(a, b);
 }
-
