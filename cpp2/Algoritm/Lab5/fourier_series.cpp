@@ -5,20 +5,22 @@
 #include <iomanip>
 #include <string>
 #include <algorithm>
-#include <limits>
+#include <fstream>
+#include <sstream>
 using namespace std;
+
 // ============================================================
 //  Метод Симпсона для численного интегрирования
 // ============================================================
 double simpson(std::function<double(double)> f, double a, double b, int n = 1000) {
-    if (n % 2 != 0) n++; //Шаг 1: Гарантируем чётное n
-    double h = (b - a) / n; // Шаг 2: Вычисляем шаг сетки
-    double result = f(a) + f(b); //  Шаг 3: Начинаем с краёв (коэфф. = 1)
-    for (int i = 1; i < n; i++) { //Шаг 4: Проходим по внутренним точкам
-        double x = a + i * h; // Текущая точка
-        result += (i % 2 == 0 ? 2.0 : 4.0) * f(x); //  Шаг 5: Применяем паттерн 4-2-4-2...
+    if (n % 2 != 0) n++;
+    double h = (b - a) / n;
+    double result = f(a) + f(b);
+    for (int i = 1; i < n; i++) {
+        double x = a + i * h;
+        result += (i % 2 == 0 ? 2.0 : 4.0) * f(x);
     }
-    return result * h / 3.0; // Шаг 6: Финальный множитель h/3
+    return result * h / 3.0;
 }
 
 // ============================================================
@@ -33,14 +35,10 @@ struct FourierCoeffs {
 FourierCoeffs computeFourier(std::function<double(double)> f,
                               double L, int N, int simpsonN = 2000) {
     FourierCoeffs c;
-    //Вычисляем a₀ (среднее значение функции)
-    c.a0 = (1.0 / L) * simpson(f, -L, L, simpsonN);// [-L, L] интервал; simpsonN
-    //Вычисляем aₙ и bₙ для n = 1...N
+    c.a0 = (1.0 / L) * simpson(f, -L, L, simpsonN);
     for (int n = 1; n <= N; n++) {
-        // aₙ: интеграл от f(x)·cos(nπx/L)
         c.an.push_back((1.0 / L) * simpson(
             [&](double x){ return f(x) * std::cos(n * M_PI * x / L); }, -L, L, simpsonN));
-        // bₙ: интеграл от f(x)·sin(nπx/L)
         c.bn.push_back((1.0 / L) * simpson(
             [&](double x){ return f(x) * std::sin(n * M_PI * x / L); }, -L, L, simpsonN));
     }
@@ -48,28 +46,60 @@ FourierCoeffs computeFourier(std::function<double(double)> f,
 }
 
 double fourierSum(const FourierCoeffs& c, double L, double x) {
-    double s = c.a0 / 2.0; // Постоянная составляющая; a0 не целое и не вектор 
+    double s = c.a0 / 2.0;
     int N = static_cast<int>(c.an.size());
     for (int n = 1; n <= N; n++)
-    // Добавляем n-ю гармонику
-        s += c.an[n-1] * std::cos(n * M_PI * x / L) // косинусная часть
-           + c.bn[n-1] * std::sin(n * M_PI * x / L); // синусная часть
+        s += c.an[n-1] * std::cos(n * M_PI * x / L)
+           + c.bn[n-1] * std::sin(n * M_PI * x / L);
     return s;
 }
 
 // ============================================================
-//  ASCII-график  f(x) и S_N(x)
+//  ЭКСПОРТ В CSV
 //
-//  cols  — ширина графика в символах
-//  rows  — высота графика в строках
+//  Файл 1: fourier_series_signal.csv
+//    Колонки: x, f(x), S_N(x), error
 //
-//  Обозначения:
-//    '*'  — f(x)        (исходная функция)
-//    '#'  — S_N(x)      (частичная сумма Фурье)
-//    '@'  — совпадение обеих кривых в одной клетке
-//    '-'  — ось X
-//    '|'  — ось Y
-//    '+'  — пересечение осей
+//  Файл 2: fourier_series_coeffs.csv
+//    Колонки: n, an, bn, amplitude (= sqrt(an²+bn²))
+// ============================================================
+void exportCSV(std::function<double(double)> f,
+               const FourierCoeffs& c,
+               double L, int N,
+               const std::string& fnameStr,
+               int plotPoints = 500) {
+
+    // --- Файл 1: сигнал ---
+    std::ofstream sig("csv/fourier_series_signal.csv");
+    sig << "# function=" << fnameStr << " N=" << N << " L=" << L << "\n";
+    sig << "x,f_x,S_N_x,error\n";
+    sig << std::fixed << std::setprecision(8);
+    for (int i = 0; i < plotPoints; i++) {
+        double x  = -L + 2.0 * L * i / (plotPoints - 1);
+        double fx = f(x);
+        double sn = fourierSum(c, L, x);
+        sig << x << "," << fx << "," << sn << "," << std::abs(fx - sn) << "\n";
+    }
+    sig.close();
+    std::cout << "  -> fourier_series_signal.csv  (" << plotPoints << " точек)\n";
+
+    // --- Файл 2: коэффициенты ---
+    std::ofstream cof("csv/fourier_series_coeffs.csv");
+    cof << "# Fourier coefficients: function=" << fnameStr << " N=" << N << "\n";
+    cof << "n,an,bn,amplitude\n";
+    cof << std::fixed << std::setprecision(8);
+    // n=0: только a0
+    cof << "0," << c.a0 << ",0," << std::abs(c.a0) << "\n";
+    for (int n = 1; n <= N; n++) {
+        double amp = std::sqrt(c.an[n-1]*c.an[n-1] + c.bn[n-1]*c.bn[n-1]);
+        cof << n << "," << c.an[n-1] << "," << c.bn[n-1] << "," << amp << "\n";
+    }
+    cof.close();
+    std::cout << "  -> fourier_series_coeffs.csv  (" << N+1 << " строк)\n";
+}
+
+// ============================================================
+//  ASCII-график
 // ============================================================
 void plotASCII(std::function<double(double)> f,
                const FourierCoeffs& c, double L,
@@ -81,7 +111,6 @@ void plotASCII(std::function<double(double)> f,
         fv[i] = f(xs[i]);
         sv[i] = fourierSum(c, L, xs[i]);
     }
-
     double ymin = *std::min_element(fv.begin(), fv.end());
     double ymax = *std::max_element(fv.begin(), fv.end());
     for (int i = 0; i < cols; i++) {
@@ -90,52 +119,36 @@ void plotASCII(std::function<double(double)> f,
     }
     double margin = (ymax - ymin) * 0.08;
     if (margin < 1e-9) margin = 0.5;
-    ymin -= margin;
-    ymax += margin;
+    ymin -= margin; ymax += margin;
 
     std::vector<std::string> canvas(rows, std::string(cols, ' '));
-
     auto toRow = [&](double y) -> int {
         int r = static_cast<int>((ymax - y) / (ymax - ymin) * (rows - 1) + 0.5);
         return std::max(0, std::min(rows - 1, r));
     };
-
-    // Ось X
     if (ymin <= 0.0 && 0.0 <= ymax) {
         int axisRow = toRow(0.0);
         for (int i = 0; i < cols; i++) canvas[axisRow][i] = '-';
     }
-    // Ось Y
     int axisCol = static_cast<int>((0.0 - (-L)) / (2.0 * L) * (cols - 1) + 0.5);
     axisCol = std::max(0, std::min(cols - 1, axisCol));
-    for (int r = 0; r < rows; r++) {
-        if      (canvas[r][axisCol] == '-') canvas[r][axisCol] = '+';
-        else                                canvas[r][axisCol] = '|';
-    }
+    for (int r = 0; r < rows; r++)
+        canvas[r][axisCol] = (canvas[r][axisCol] == '-') ? '+' : '|';
 
-    // Нанесение кривых
     for (int i = 0; i < cols; i++) {
-        int rf = toRow(fv[i]);
-        int rs = toRow(sv[i]);
-
         auto plot = [&](int row, char ch) {
             char cur = canvas[row][i];
-            if      (cur == ' ' || cur == '-' || cur == '|' || cur == '+')
-                canvas[row][i] = ch;
-            else if ((cur == '*' && ch == '#') || (cur == '#' && ch == '*'))
-                canvas[row][i] = '@';
+            if (cur == ' ' || cur == '-' || cur == '|' || cur == '+') canvas[row][i] = ch;
+            else if ((cur == '*' && ch == '#') || (cur == '#' && ch == '*')) canvas[row][i] = '@';
         };
-        plot(rf, '*');
-        plot(rs, '#');
+        plot(toRow(fv[i]), '*');
+        plot(toRow(sv[i]), '#');
     }
 
-    // Вывод
     const int labelW = 9;
     std::string hBorder(cols + 2, '-');
-
     std::cout << "\n--- График: * = f(x)  # = S_N(x)  @ = совпадение ---\n";
     std::cout << std::string(labelW, ' ') << "+" << hBorder << "+\n";
-
     for (int r = 0; r < rows; r++) {
         double yLabel = ymax - (ymax - ymin) * r / (rows - 1);
         if (r % 4 == 0)
@@ -144,22 +157,14 @@ void plotASCII(std::function<double(double)> f,
             std::cout << std::string(labelW, ' ');
         std::cout << "|" << canvas[r] << "|\n";
     }
-
     std::cout << std::string(labelW, ' ') << "+" << hBorder << "+\n";
-
-    // Метки оси X
     std::cout << std::string(labelW + 1, ' ');
-    int labelCount = 6;
     int prevEnd = 0;
-    for (int k = 0; k <= labelCount; k++) {
-        double xLabel = -L + 2.0 * L * k / labelCount;
-        int col = static_cast<int>((double)k / labelCount * (cols - 1));
-        std::string lbl;
-        {
-            std::ostringstream oss;
-            oss << std::fixed << std::setprecision(2) << xLabel;
-            lbl = oss.str();
-        }
+    for (int k = 0; k <= 6; k++) {
+        double xLabel = -L + 2.0 * L * k / 6;
+        int col = static_cast<int>((double)k / 6 * (cols - 1));
+        std::ostringstream oss; oss << std::fixed << std::setprecision(2) << xLabel;
+        std::string lbl = oss.str();
         int spaces = col - prevEnd - (int)lbl.size() / 2;
         if (spaces < 1) spaces = 1;
         std::cout << std::string(spaces, ' ') << lbl;
@@ -175,14 +180,10 @@ void printCoeffs(const FourierCoeffs& c, int N) {
     std::cout << std::fixed << std::setprecision(6);
     std::cout << "\n--- Коэффициенты Фурье ---\n";
     std::cout << "a0 = " << c.a0 << "\n";
-    std::cout << std::setw(5)  << "n"
-              << std::setw(14) << "an"
-              << std::setw(14) << "bn" << "\n";
+    std::cout << std::setw(5) << "n" << std::setw(14) << "an" << std::setw(14) << "bn" << "\n";
     std::cout << std::string(33, '-') << "\n";
     for (int n = 1; n <= N; n++)
-        std::cout << std::setw(5)  << n
-                  << std::setw(14) << c.an[n-1]
-                  << std::setw(14) << c.bn[n-1] << "\n";
+        std::cout << std::setw(5) << n << std::setw(14) << c.an[n-1] << std::setw(14) << c.bn[n-1] << "\n";
 }
 
 // ============================================================
@@ -191,19 +192,15 @@ void printCoeffs(const FourierCoeffs& c, int N) {
 void printComparison(std::function<double(double)> f,
                      const FourierCoeffs& c, double L, int points = 10) {
     std::cout << "\n--- Сравнение f(x) и S_N(x) ---\n";
-    std::cout << std::setw(10) << "      x"
-              << std::setw(14) << "f(x)"
-              << std::setw(14) << "S_N(x)"
-              << std::setw(14) << "|погрешность|" << "\n";
+    std::cout << std::setw(10) << "x" << std::setw(14) << "f(x)"
+              << std::setw(14) << "S_N(x)" << std::setw(14) << "|погрешность|" << "\n";
     std::cout << std::string(52, '-') << "\n";
     for (int i = 0; i <= points; i++) {
         double x  = -L + 2.0 * L * i / points;
         double fx = f(x);
         double sn = fourierSum(c, L, x);
-        std::cout << std::setw(10) << x
-                  << std::setw(14) << fx
-                  << std::setw(14) << sn
-                  << std::setw(14) << std::abs(fx - sn) << "\n";
+        std::cout << std::setw(10) << x << std::setw(14) << fx
+                  << std::setw(14) << sn << std::setw(14) << std::abs(fx - sn) << "\n";
     }
 }
 
@@ -222,7 +219,7 @@ int main() {
     std::cout << "=== Разложение в ряд Фурье (метод Симпсона) ===\n\n";
     std::cout << "Выберите функцию:\n";
     std::cout << "  1 - Прямоугольный меандр\n";
-    std::cout << "  2 - Пилообразная (f = x)\n";
+    std::cout << "  2 - sin²(x)/(13-12cos(x))\n";
     std::cout << "  3 - Парабола (f = x^2)\n";
     std::cout << "  4 - f(x) = |x|\n";
     std::cout << "Ваш выбор: ";
@@ -232,10 +229,10 @@ int main() {
     std::string fname;
     switch (choice) {
         case 1: f = funcSquareWave; fname = "Прямоугольный меандр"; break;
-        case 2: f = funcSawtooth;   fname = "Пилообразная f(x)=x";  break;
-        case 3: f = funcParabola;   fname = "Парабола f(x)=x^2";    break;
-        case 4: f = funcAbsX;       fname = "f(x)=|x|";             break;
-        default: f = funcSawtooth;  fname = "Пилообразная f(x)=x";
+        case 2: f = funcSawtooth;   fname = "sin2(x)/(13-12cos(x))"; break;
+        case 3: f = funcParabola;   fname = "Парабола x^2"; break;
+        case 4: f = funcAbsX;       fname = "|x|"; break;
+        default: f = funcSawtooth;  fname = "sin2(x)/(13-12cos(x))";
     }
 
     std::cout << "Число гармоник N (рекомендуется 5-15): ";
@@ -253,6 +250,11 @@ int main() {
     plotASCII(f, coeffs, L, 72, 24);
     printCoeffs(coeffs, N);
     printComparison(f, coeffs, L);
+
+    // Экспорт
+    std::cout << "\n--- Экспорт данных ---\n";
+    exportCSV(f, coeffs, L, N, fname);
+    std::cout << "Запустите plot_fourier_series.py для построения графика.\n";
 
     std::cout << "\nГотово!\n";
     return 0;
