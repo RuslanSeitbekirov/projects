@@ -29,7 +29,7 @@ double simpson(std::function<double(double)> f, double a, double b, int n = 1000
 struct FourierCoeffs {
     double a0;
     std::vector<double> an;
-    std::vector<double> bn;
+    std::vector<double> bn; 
 };
 
 FourierCoeffs computeFourier(std::function<double(double)> f,

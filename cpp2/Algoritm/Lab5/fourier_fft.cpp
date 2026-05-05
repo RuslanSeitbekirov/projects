@@ -41,7 +41,7 @@ double funcAbsX      (double x) { return std::abs(x) / PI; }
 double funcTriangle  (double x) { return (2.0/PI) * std::asin(std::sin(x)); }
 double funcSinc      (double x) { return (x == 0.0) ? 1.0 : std::sin(x) / x; }
 double MyFunc        (double x) { return (x == 0.0) ? 1.0 : std::sin(x) / x; }
-
+ 
 // ============================================================
 //  2. FFT — алгоритм Кули-Тьюки (рекурсивный, основание 2)
 //
@@ -66,6 +66,8 @@ void fft(std::vector<cd>& a, bool invert) {
     double angle = 2.0 * PI / n * (invert ? -1.0 : 1.0);
     cd w(1.0, 0.0);
     cd wn(std::cos(angle), std::sin(angle));
+    
+    //Объединяем результаты (формула "бабочки")
     for (int i = 0; i < n / 2; i++) {
         cd t = w * a1[i];
         a[i]         = a0[i] + t;

@@ -122,16 +122,19 @@ int simplexStep(vector<vector<double>>& tab,
     for (int c : allowed) {
         if (tab[objRow][c] < minCoef) { minCoef = tab[objRow][c]; pivCol = c; }
     }
-    if (pivCol == -1) return 1; // оптимум
+    if (pivCol == -1) return 1; // оптимум 
 
     // Поиск ведущей строки (правило минотношений)
     int pivRow = -1; double minRatio = INF;
     for (int r = 0; r < numCons; r++) {
-        if (tab[r][pivCol] < EPS) continue;
+        if (tab[r][pivCol] < EPS) continue; // нельзя делить на ноль/отрицательное
         double ratio = tab[r][bCol] / tab[r][pivCol];
-        if (ratio < minRatio - EPS) { minRatio = ratio; pivRow = r; }
+        if (ratio < minRatio - EPS) { 
+            minRatio = ratio; 
+            pivRow = r; 
+        }
     }
-    if (pivRow == -1) return -1; // неограничена
+    if (pivRow == -1) return -1; // Все коэффициенты ≤ 0 → неограничена
 
     // Вывод таблицы с ведущим элементом
     printTable(tab, colNames, rowNames, stepLabel, pivRow, pivCol);
@@ -199,7 +202,7 @@ int main()
     cout << "  x3 <= 5\n";
     cout << "  x4 = x1 + x2\n\n";
     cout << "После подстановки x4 = x1+x2:\n";
-    cout << "  min 2x1 + 2x2 + x3\n";
+    cout << "  min 2*x1 + 2*x2 + x3\n";
     cout << "  40x1 + 30x2 + 12x3 >= 300\n";
     cout << "  x1 >= 3\n";
     cout << "  x3 <= 5\n\n";
@@ -215,11 +218,11 @@ int main()
     const int numVarsExt = 9; // 8 переменных + b
 
     vector<vector<double>> tab1 = {
-    //  x1    x2    x3    s1    s2    s3    a1    a2    b
-      { 40,   30,   12,  -1,    0,    0,    1,    0,  300 }, // R0
-      {  1,    0,    0,   0,   -1,    0,    0,    1,    3 }, // R1
-      {  0,    0,    1,   0,    0,    1,    0,    0,    5 }, // R2
-      {  0,    0,    0,   0,    0,    0,    1,    1,    0 }, // R3: W=a1+a2
+    //  x1    x2    x3    s1    s2    s3    a1    a2    b 
+      { 40,   30,   12,  -1,    0,    0,    1,    0,  300 }, // R0  Первое ограничение
+      {  1,    0,    0,   0,   -1,    0,    0,    1,    3 }, // R1  Второе ограничение
+      {  0,    0,    1,   0,    0,    1,    0,    0,    5 }, // R2  Третье ограничение
+      {  0,    0,    0,   0,    0,    0,    1,    1,    0 }, // R3: W=a1+a2 Целевая функция
     };
 
     vector<string> colNames1 = {"x1","x2","x3","s1","s2","s3","a1","a2","b"};
@@ -316,7 +319,7 @@ int main()
     }
 
     cout << "\n" << string(70,'*') << "\n";
-    cout << "  ЭТАП 2: минимизируем Z = 2x1 + 2x2 + x3\n";
+    cout << "  ЭТАП 2: минимизируем Z = 2*x1 + 2*x2 + x3\n";
     cout << string(70,'*') << "\n";
 
     vector<int> allowed2 = {0,1,2,3,4,5};

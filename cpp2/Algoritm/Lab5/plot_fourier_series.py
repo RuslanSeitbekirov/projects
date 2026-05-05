@@ -29,7 +29,7 @@ def load_signal(path='fourier_series_signal.csv'):
     meta = {}
     with open(path) as fh:
         for line in fh:
-            if line.startswith('#'):
+            if line.startswith('#'): 
                 for part in line[1:].split():
                     if '=' in part:
                         k, v = part.split('=', 1)
