@@ -128,7 +128,7 @@ def plot(signal_file='fourier_fft_signal.csv',
     pos_mask = amp_fft[:show] > 0
     ax5.semilogy(k_fft[:show][pos_mask], amp_fft[:show][pos_mask],
                  color=GOLD, lw=1.5, marker='o', ms=3)
-    ax5.set_title('Спектр FFT (лог. шкала)', color=WHITE, fontsize=11)
+    ax5.set_title('Спектр FFT (лог. шкала)', color=WHITE, fontsize=11) 
     ax5.set_xlabel('k', color=GRAY); ax5.set_ylabel('|X[k]|/N  (log)', color=GRAY)
     ax5.yaxis.label.set_color(GRAY)
 
