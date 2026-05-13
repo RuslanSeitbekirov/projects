@@ -314,7 +314,7 @@ int main() {
 
         HJResult res = hookeJeeves(x0, /*h0=*/1.0, /*eps=*/1e-7,
                                    /*reduce=*/10.0, /*maxIter=*/10000,
-                                   /*verbose=*/false);
+                                   /*verbose=*/true);
 
         cout << fixed << setprecision(8);
         cout << "  РЕЗУЛЬТАТ:\n";
