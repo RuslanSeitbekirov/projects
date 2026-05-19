@@ -78,12 +78,7 @@ using namespace std;
 // ====================================================================
 double f(const vector<double>& x) {
     double x1 = x[0], x2 = x[1];
-    return x1*x1*x1*x1
-         + x2*x2*x2*x2
-         - 2.0*x1*x1
-         - 4.0*x2*x2
-         + x1*x2
-         + 5.0;
+    return x1*x1*x1*x1 + x2*x2*x2*x2 - 2.0*x1*x1 - 4.0*x2*x2 + x1*x2 + 5.0;
 }
 
 // ====================================================================
@@ -319,7 +314,7 @@ int main() {
 
         HJResult res = hookeJeeves(x0, /*h0=*/1.0, /*eps=*/1e-7,
                                    /*reduce=*/10.0, /*maxIter=*/10000,
-                                   /*verbose=*/false);
+                                   /*verbose=*/true);
 
         cout << fixed << setprecision(8);
         cout << "  РЕЗУЛЬТАТ:\n";
