@@ -163,7 +163,7 @@ void exportCSV(std::function<double(double)> f,
                int plotPoints = 500) {
 
     // --- Файл 1: сигнал ---
-    std::ofstream sig("fourier_series_signal.csv");
+    std::ofstream sig("csv/fourier_series_signal.csv");
     sig << "# function=" << fnameStr << " N=" << N << " L=" << L << "\n";
     sig << "x,f_x,S_N_x,error\n";
     sig << std::fixed << std::setprecision(8);
