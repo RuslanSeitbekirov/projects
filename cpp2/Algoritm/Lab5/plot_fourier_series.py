@@ -1,5 +1,5 @@
 """
-Визуализация данных из fourier_series.cpp
+Визуализация данных из fourier_series.cpp 
 Читает: fourier_series_signal.csv, fourier_series_coeffs.csv
 """
 

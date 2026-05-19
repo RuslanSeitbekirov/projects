@@ -238,7 +238,7 @@ int main() {
     std::cout << "Число гармоник N (рекомендуется 5-15): ";
     int N; std::cin >> N;
     if (N < 1) N = 1;
-    if (N > 50) N = 50;
+    // if (N > 50) N = 50;
 
     double L = M_PI;
     std::cout << "\nФункция  : " << fname << "\n";
