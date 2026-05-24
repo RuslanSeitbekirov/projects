@@ -393,7 +393,7 @@ int main()
     // бюджет: 40x1 + 30x2 + 12x3 >= 300
     // минимизируем Z = 2x1 + 2x2 + x3 (= общее число предметов - x4 уже учтён)
     for (int ix1 = 3; ix1 <= 30; ix1++)
-    for (int ix2 = 0; ix2 <= 30; ix2++)
+    for (int ix2 = 0; ix2 <= 30; ix2++) 
     for (int ix3 = 0; ix3 <= 5; ix3++) {
         if (40*ix1 + 30*ix2 + 12*ix3 < 300) continue;
         int ix4 = ix1 + ix2;

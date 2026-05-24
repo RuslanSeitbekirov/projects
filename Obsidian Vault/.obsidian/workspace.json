@@ -35,8 +35,7 @@
               "title": "Без названия"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -220,7 +219,7 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "38bc366190084805",
+  "active": "fd4fd52856ddb80e",
   "lastOpenFiles": [
     "Без названия.md",
     "Алгебра/Математика 15.09.md",

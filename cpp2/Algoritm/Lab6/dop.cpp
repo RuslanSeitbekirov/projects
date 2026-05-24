@@ -122,7 +122,7 @@ double goldenSection(double x1, double x2,
 // ====================================================================
 struct NewtonResult {
     double x1, x2, fMin;
-    int    iters;
+    int    iters; 
     bool   converged;
 };
 

@@ -1,5 +1,5 @@
 """
-Визуализация данных из fourier_series.cpp
+Визуализация данных из fourier_series.cpp 
 Читает: fourier_series_signal.csv, fourier_series_coeffs.csv
 """
 
@@ -44,8 +44,8 @@ def load_coeffs(path='fourier_series_coeffs.csv'):
     return data         # columns: n, an, bn, amplitude
 
 # ── Построение ───────────────────────────────────────────────
-def plot(signal_file='fourier_series_signal.csv',
-         coeffs_file='fourier_series_coeffs.csv'):
+def plot(signal_file='csv/fourier_series_signal.csv',
+         coeffs_file='csv/fourier_series_coeffs.csv'):
 
     meta, sig = load_signal(signal_file)
     cof       = load_coeffs(coeffs_file)
