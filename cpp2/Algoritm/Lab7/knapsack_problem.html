@@ -1,0 +1,276 @@
+
+<h2 class="sr-only">Задача о рюкзаке</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.root{padding:1.25rem 0;font-size:14px}
+.top{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem}
+.sec-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem}
+.item-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.item-row input{width:60px;height:30px;text-align:center;font-size:13px}
+.item-name{font-size:13px;color:var(--color-text-secondary);width:90px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.remove-btn{background:none;border:none;cursor:pointer;color:var(--color-text-secondary);padding:2px 6px;border-radius:4px;font-size:16px;line-height:1}
+.remove-btn:hover{color:var(--color-text-primary);background:var(--color-background-secondary)}
+.add-btn{display:flex;align-items:center;gap:6px;background:none;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:5px 12px;font-size:13px;cursor:pointer;color:var(--color-text-secondary);margin-top:4px}
+.add-btn:hover{background:var(--color-background-secondary)}
+.cap-row{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.cap-row label{font-size:13px;color:var(--color-text-secondary)}
+.cap-row input{width:80px;height:30px;text-align:center}
+.solve-btn{width:100%;padding:8px;font-size:13px;font-weight:500;cursor:pointer;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-primary)}
+.solve-btn:hover{border-color:var(--color-border-primary)}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem}
+.metric{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem}
+.metric .lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+.metric .val{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+.dp-wrap{overflow-x:auto;margin-bottom:1.25rem}
+.dp-table{border-collapse:collapse;font-size:11px;min-width:max-content}
+.dp-table th,.dp-table td{border:0.5px solid var(--color-border-tertiary);padding:4px 7px;text-align:center;min-width:32px}
+.dp-table th{background:var(--color-background-secondary);font-weight:500;color:var(--color-text-secondary)}
+.dp-table td{color:var(--color-text-primary)}
+.cell-opt{background:#0084ff;color:#0C447C;font-weight:500}
+.cell-trace{background:#38ff21;color:#085041;font-weight:500}
+.knapsack-vis{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.25rem}
+.item-chip{display:flex;flex-direction:column;align-items:center;justify-content:center;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 12px;min-width:64px;transition:all .25s}
+.item-chip.selected{border:2px solid #185FA5;background:#E6F1FB}
+.item-chip.selected .chip-name{color:#0C447C}
+.item-chip.selected .chip-sub{color:#185FA5}
+.item-chip.not-selected{opacity:.38}
+.chip-name{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.chip-sub{font-size:10px;color:var(--color-text-secondary);margin-top:2px}
+.chip-icon{font-size:20px;margin-bottom:4px}
+.bar-wrap{display:flex;gap:2px;align-items:flex-end;height:80px;margin-top:.5rem}
+.bar{flex:1;border-radius:3px 3px 0 0;min-width:12px;transition:height .4s}
+.legend-row{display:flex;gap:16px;margin-top:6px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
+.legend-dot{width:10px;height:10px;border-radius:2px}
+.section-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:.75rem}
+.code-block{font-family:var(--font-mono);font-size:11px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;overflow-x:auto;color:var(--color-text-primary);white-space:pre;line-height:1.7;margin-bottom:1.25rem}
+.kw{color:#185FA5}.cm{color:#888780}.fn{color:#0F6E56}
+</style>
+
+<div class="root">
+
+<div class="top">
+  <div class="card">
+    <div class="sec-label">Предметы</div>
+    <div id="items-container"></div>
+    <button class="add-btn" onclick="addItem()"><i class="ti ti-plus" aria-hidden="true"></i> Добавить предмет</button>
+  </div>
+  <div class="card">
+    <div class="sec-label">Параметры рюкзака</div>
+    <div class="cap-row">
+      <label>Вместимость:</label>
+      <input type="number" id="capacity" value="15" min="1" max="50" oninput="render()">
+      <span style="font-size:12px;color:var(--color-text-secondary)">кг</span>
+    </div>
+    <button class="solve-btn" onclick="solve()">Решить задачу о рюкзаке</button>
+    <div style="margin-top:.75rem;font-size:12px;color:var(--color-text-secondary);line-height:1.6">
+      Динамическое программирование.<br>
+      Сложность: O(n·W) по времени и памяти.
+    </div>
+  </div>
+</div>
+
+<div class="metrics">
+  <div class="metric"><div class="lbl">Макс. ценность</div><div class="val" id="m-val">—</div></div>
+  <div class="metric"><div class="lbl">Суммарный вес</div><div class="val" id="m-wt">—</div></div>
+  <div class="metric"><div class="lbl">Предметов в рюкзаке</div><div class="val" id="m-cnt">—</div></div>
+</div>
+
+<div class="card" style="margin-bottom:1.25rem">
+  <div class="section-title">Выбранные предметы</div>
+  <div id="knapsack-vis" class="knapsack-vis"></div>
+  <div style="height:90px">
+    <div class="bar-wrap" id="bar-chart"></div>
+    <div class="legend-row">
+      <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>ценность</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>вес</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#FAC775;opacity:.4"></div>не выбран</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:1.25rem">
+  <div class="section-title">DP-таблица dp[i][w]</div>
+  <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:.75rem">
+    <span style="display:inline-block;width:10px;height:10px;background:#0084ff;border-radius:2px;margin-right:4px;vertical-align:middle"></span>Оптимум &nbsp;
+    <span style="display:inline-block;width:10px;height:10px;background:#0dff00;border-radius:2px;margin-right:4px;vertical-align:middle"></span>Обратный ход
+  </div>
+  <div class="dp-wrap"><table class="dp-table" id="dp-table"></table></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Алгоритм (C++)</div>
+  <div class="code-block"><span class="cm">// Задача о рюкзаке 0/1 — динамическое программирование</span>
+<span class="kw">vector</span>&lt;<span class="kw">vector</span>&lt;<span class="kw">int</span>&gt;&gt; <span class="fn">knapsack</span>(<span class="kw">int</span> W, <span class="kw">vector</span>&lt;<span class="kw">int</span>&gt;&amp; wt, <span class="kw">vector</span>&lt;<span class="kw">int</span>&gt;&amp; val) {
+    <span class="kw">int</span> n = val.size();
+    <span class="kw">vector</span>&lt;<span class="kw">vector</span>&lt;<span class="kw">int</span>&gt;&gt; dp(n+1, <span class="kw">vector</span>&lt;<span class="kw">int</span>&gt;(W+1, 0));
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = 1; i &lt;= n; i++)
+        <span class="kw">for</span> (<span class="kw">int</span> w = 0; w &lt;= W; w++)
+            <span class="kw">if</span> (wt[i-1] &lt;= w)
+                dp[i][w] = <span class="fn">max</span>(dp[i-1][w],
+                            dp[i-1][w-wt[i-1]] + val[i-1]);
+            <span class="kw">else</span>
+                dp[i][w] = dp[i-1][w];
+
+    <span class="kw">return</span> dp;   <span class="cm">// dp[n][W] — максимальная ценность</span>
+}
+
+<span class="cm">// Обратный ход — восстановление состава рюкзака</span>
+<span class="kw">vector</span>&lt;<span class="kw">int</span>&gt; <span class="fn">traceback</span>(<span class="kw">auto</span>&amp; dp, <span class="kw">auto</span>&amp; wt, <span class="kw">int</span> W) {
+    <span class="kw">int</span> n = dp.size() - 1, w = W;
+    <span class="kw">vector</span>&lt;<span class="kw">int</span>&gt; chosen;
+    <span class="kw">for</span> (<span class="kw">int</span> i = n; i &gt; 0; i--)
+        <span class="kw">if</span> (dp[i][w] != dp[i-1][w])
+            { chosen.push_back(i-1); w -= wt[i-1]; }
+    <span class="kw">return</span> chosen;   <span class="cm">// индексы выбранных предметов</span>
+}</div>
+</div>
+
+</div>
+
+<script>
+const ICONS = ['🎒','📱','💻','📷','🎸','📚','🔭','🎮','💎','⌚','🛠️','🎵','🖼️','🔋','📡'];
+let items = [
+  {name:'Ноутбук',  w:4, v:1200},
+  {name:'Камера',   w:3, v:800},
+  {name:'Книги',    w:5, v:400},
+  {name:'Телефон',  w:1, v:900},
+  {name:'Зарядка',  w:2, v:300},
+  {name:'Часы',     w:1, v:600},
+];
+let dpResult=null, chosen=[];
+
+function addItem(){
+  items.push({name:'Предмет '+(items.length+1), w:2, v:200});
+  render(); solve();
+}
+function removeItem(i){
+  items.splice(i,1); render(); solve();
+}
+
+function render(){
+  const c=document.getElementById('items-container');
+  c.innerHTML='';
+  items.forEach((it,i)=>{
+    const row=document.createElement('div');
+    row.className='item-row';
+    row.innerHTML=`
+      <span class="chip-icon" style="font-size:16px">${ICONS[i%ICONS.length]}</span>
+      <span class="item-name" title="${it.name}">${it.name}</span>
+      <input type="number" value="${it.w}" min="1" max="50" title="вес" oninput="items[${i}].w=+this.value;solve()" style="width:50px">
+      <span style="font-size:11px;color:var(--color-text-secondary)">кг</span>
+      <input type="number" value="${it.v}" min="1" max="9999" title="ценность" oninput="items[${i}].v=+this.value;solve()" style="width:60px">
+      <span style="font-size:11px;color:var(--color-text-secondary)">₽</span>
+      <button class="remove-btn" onclick="removeItem(${i})" aria-label="Удалить">×</button>`;
+    c.appendChild(row);
+  });
+}
+
+function solve(){
+  const W=Math.max(1,+document.getElementById('capacity').value||15);
+  const n=items.length;
+  if(n===0){document.getElementById('m-val').textContent='—';return;}
+
+  const dp=Array.from({length:n+1},()=>new Int32Array(W+1));
+  for(let i=1;i<=n;i++)
+    for(let w=0;w<=W;w++)
+      if(items[i-1].w<=w)
+        dp[i][w]=Math.max(dp[i-1][w], dp[i-1][w-items[i-1].w]+items[i-1].v);
+      else
+        dp[i][w]=dp[i-1][w];
+
+  chosen=[];
+  let w=W;
+  for(let i=n;i>0;i--)
+    if(dp[i][w]!==dp[i-1][w]){chosen.push(i-1);w-=items[i-1].w;}
+
+  dpResult=dp;
+  const totV=chosen.reduce((s,i)=>s+items[i].v,0);
+  const totW=chosen.reduce((s,i)=>s+items[i].w,0);
+  document.getElementById('m-val').textContent=totV.toLocaleString()+'₽';
+  document.getElementById('m-wt').textContent=totW+'кг';
+  document.getElementById('m-cnt').textContent=chosen.length;
+
+  renderVis();
+  renderDP(dp,W,n);
+  renderBars();
+}
+
+function renderVis(){
+  const vis=document.getElementById('knapsack-vis');
+  vis.innerHTML='';
+  items.forEach((it,i)=>{
+    const sel=chosen.includes(i);
+    const div=document.createElement('div');
+    div.className='item-chip '+(sel?'selected':'not-selected');
+    div.innerHTML=`<span class="chip-icon">${ICONS[i%ICONS.length]}</span>
+      <span class="chip-name">${it.name}</span>
+      <span class="chip-sub">${it.w}кг · ${it.v}₽</span>`;
+    vis.appendChild(div);
+  });
+}
+
+function renderBars(){
+  const bc=document.getElementById('bar-chart');
+  bc.innerHTML='';
+  if(!items.length)return;
+  const maxV=Math.max(...items.map(it=>it.v));
+  const maxW=Math.max(...items.map(it=>it.w));
+  items.forEach((it,i)=>{
+    const sel=chosen.includes(i);
+    const hv=Math.round(it.v/maxV*70);
+    const hw=Math.round(it.w/maxW*70);
+    const bv=document.createElement('div');
+    bv.className='bar';
+    bv.style.cssText=`height:${hv}px;background:${sel?'#378ADD':'#FAC775'};opacity:${sel?1:.5}`;
+    bv.title=it.name+': '+it.v+'₽';
+    const bw=document.createElement('div');
+    bw.className='bar';
+    bw.style.cssText=`height:${hw}px;background:${sel?'#1D9E75':'#9FE1CB'};opacity:${sel?1:.5}`;
+    bw.title=it.name+': '+it.w+'кг';
+    bc.appendChild(bv);
+    bc.appendChild(bw);
+    const gap=document.createElement('div');
+    gap.style.cssText='width:6px;flex-shrink:0';
+    bc.appendChild(gap);
+  });
+}
+
+function renderDP(dp,W,n){
+  const tbl=document.getElementById('dp-table');
+  tbl.innerHTML='';
+  const displayW=Math.min(W,20);
+
+  const traceSet=new Set();
+  let tw=W;
+  for(let i=n;i>0;i--)
+    if(dp[i][tw]!==dp[i-1][tw]){traceSet.add(i+','+tw);tw-=items[i-1].w;}
+
+  let head='<tr><th>i\\w</th>';
+  for(let w=0;w<=displayW;w++) head+=`<th>${w}</th>`;
+  if(W>displayW) head+=`<th>…${W}</th>`;
+  head+='</tr>';
+  tbl.innerHTML=head;
+
+  for(let i=0;i<=n;i++){
+    let row=`<tr><th style="text-align:left;padding-left:8px">${i===0?'—':(ICONS[i-1%ICONS.length]+' '+items[i-1].name)}</th>`;
+    for(let w=0;w<=displayW;w++){
+      const isTrace=traceSet.has(i+','+w);
+      const isOpt=(i===n&&w===W);
+      const cls=isOpt?'cell-opt':isTrace?'cell-trace':'';
+      row+=`<td class="${cls}">${dp[i][w]}</td>`;
+    }
+    if(W>displayW){
+      const isOpt=(i===n);
+      row+=`<td class="${isOpt?'cell-opt':''}">${dp[i][W]}</td>`;
+    }
+    row+='</tr>';
+    tbl.innerHTML+=row;
+  }
+}
+
+render();
+solve();
+</script>
