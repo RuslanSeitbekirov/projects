@@ -331,7 +331,7 @@ int main() {
         cout << "\n" << string(80,'*') << "\n";
         cout << "  ЗАПУСК 1: x0=(0.5,0.5) — стартуем вблизи центра, метод Ньютона с поиском шага\n";
 
-        NewtonResult r = newtonMethod(0.5, 0.5, 1e-8, 200, true, true);
+        NewtonResult r = newtonMethod(-2.0, 2.0, 1e-8, 200, true, true);
 
         cout << string(80,'-') << "\n";
         cout << (r.converged ? "  Сошёлся за " : "  НЕ сошёлся, итераций: ")
@@ -348,7 +348,7 @@ int main() {
         cout << "\n" << string(80,'*') << "\n";
         cout << "  ЗАПУСК 2: x0=(2,2), метод Ньютона с поиском шага\n";
 
-        NewtonResult r = newtonMethod(2.0, 2.0, 1e-8, 200, true, true);
+        NewtonResult r = newtonMethod(2.0, -2.0, 1e-8, 200, true, true);
 
         cout << string(80,'-') << "\n";
         cout << (r.converged ? "  Сошёлся за " : "  НЕ сошёлся, итераций: ")
@@ -365,7 +365,7 @@ int main() {
         cout << "\n" << string(80,'*') << "\n";
         cout << "  ЗАПУСК 3: x0=(-2,2), метод Ньютона с поиском шага\n";
 
-        NewtonResult r = newtonMethod(-2.0, 2.0, 1e-8, 200, true, true);
+        NewtonResult r = newtonMethod(-2.0, 2.0, 1e-8, 200, false, false);
 
         cout << string(80,'-') << "\n";
         cout << (r.converged ? "  Сошёлся за " : "  НЕ сошёлся, итераций: ")
