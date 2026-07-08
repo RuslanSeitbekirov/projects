@@ -1,0 +1,15 @@
+C:\projects\C#\pr_1\bin\Debug\net10.0\pr_1.exe
+C:\projects\C#\pr_1\bin\Debug\net10.0\pr_1.deps.json
+C:\projects\C#\pr_1\bin\Debug\net10.0\pr_1.runtimeconfig.json
+C:\projects\C#\pr_1\bin\Debug\net10.0\pr_1.dll
+C:\projects\C#\pr_1\bin\Debug\net10.0\pr_1.pdb
+C:\projects\C#\pr_1\obj\Debug\net10.0\pr_1.GeneratedMSBuildEditorConfig.editorconfig
+C:\projects\C#\pr_1\obj\Debug\net10.0\pr_1.AssemblyInfoInputs.cache
+C:\projects\C#\pr_1\obj\Debug\net10.0\pr_1.AssemblyInfo.cs
+C:\projects\C#\pr_1\obj\Debug\net10.0\pr_1.csproj.CoreCompileInputs.cache
+C:\projects\C#\pr_1\obj\Debug\net10.0\pr_1.sourcelink.json
+C:\projects\C#\pr_1\obj\Debug\net10.0\pr_1.dll
+C:\projects\C#\pr_1\obj\Debug\net10.0\refint\pr_1.dll
+C:\projects\C#\pr_1\obj\Debug\net10.0\pr_1.pdb
+C:\projects\C#\pr_1\obj\Debug\net10.0\pr_1.genruntimeconfig.cache
+C:\projects\C#\pr_1\obj\Debug\net10.0\ref\pr_1.dll
