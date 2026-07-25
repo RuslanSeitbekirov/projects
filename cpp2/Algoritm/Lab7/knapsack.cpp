@@ -90,7 +90,7 @@ vector<int> traceback(const vector<vector<int>>& dp,
         if (dp[i][w] != dp[i-1][w]) {
             chosen.push_back(i - 1);   // 0-based индекс
             w -= items[i-1].weight;
-        }
+        } 
     }
     reverse(chosen.begin(), chosen.end());
     return chosen;
