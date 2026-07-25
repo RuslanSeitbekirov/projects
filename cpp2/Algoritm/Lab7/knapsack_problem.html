@@ -247,7 +247,7 @@ function renderDP(dp,W,n){
   let tw=W;
   for(let i=n;i>0;i--)
     if(dp[i][tw]!==dp[i-1][tw]){traceSet.add(i+','+tw);tw-=items[i-1].w;}
-
+ 
   let head='<tr><th>i\\w</th>';
   for(let w=0;w<=displayW;w++) head+=`<th>${w}</th>`;
   if(W>displayW) head+=`<th>…${W}</th>`;
