@@ -181,7 +181,7 @@ function solve(){
       else
         dp[i][w]=dp[i-1][w];
 
-  chosen=[];
+  chosen=[]; 
   let w=W;
   for(let i=n;i>0;i--)
     if(dp[i][w]!==dp[i-1][w]){chosen.push(i-1);w-=items[i-1].w;}
