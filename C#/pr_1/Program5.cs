@@ -1,7 +1,4 @@
 using System;
-using System.IO;
-using System.Runtime.CompilerServices;
-using Microsoft.VisualBasic; // Библиотека для работы с файлами
 
 namespace pr_1{
     
@@ -25,7 +22,7 @@ namespace pr_1{
             try
             {
                 int a = 5, b = 0, res;
-                System.Console.Write("Write first num:");
+                Console.Write("Write first num:");
                 a = Convert.ToInt32(Console.ReadLine());
                 System.Console.Write("Write second num:");
                 b = Convert.ToInt32(Console.ReadLine());
@@ -43,7 +40,7 @@ namespace pr_1{
             }
             finally
             {
-                
+                System.Console.WriteLine("I go kakat!");
             }
 
 

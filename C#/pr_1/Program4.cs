@@ -52,7 +52,7 @@ namespace pr_1{
             using(FileStream stream1 = File.OpenRead("info.txt"))
             {
                 byte[] array = new byte[stream1.Length];
-                stream1.Read(array, 0, array.Length);
+                // stream1.Read(array, 0, array.Length);
 
                 string textFromFile = System.Text.Encoding.Default.GetString(array);
                 System.Console.WriteLine(textFromFile);
