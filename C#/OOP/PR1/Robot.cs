@@ -65,7 +65,7 @@ namespace project
             this.coordinates = coordinates;
         }
 
-        public void printValues()
+        public virtual void printValues()
         {
             System.Console.WriteLine(this.name + " weight " + this.weight + ". Coordinates: ");
             foreach(byte el in coordinates) System.Console.WriteLine(el + " ");
@@ -73,7 +73,7 @@ namespace project
 
         public static void Print()
         {
-            System.Console.WriteLine("Count: {0}", count);
+            System.Console.WriteLine("Count is: {0}", count);
         }
 
     }
