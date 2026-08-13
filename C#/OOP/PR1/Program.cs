@@ -12,13 +12,17 @@ namespace project
             bot.printValues();
             
             
-            Robot killer = new Robot();
-            killer.setValues("killer", 1000, new byte[] {2, 2, 4});
-            killer.printValues();
+            Killer killer = new Killer("killer", 1000, new byte[] {2, 2, 4}, 100);
+            // killer.setValues("killer", 1000, new byte[] {2, 2, 4});
+            // killer.printValues();
+            killer.Health = 100;
+            killer.Lazer();
 
+            
             Robot bot1 = new Robot("bot");
             bot1.Width = -100;
             System.Console.WriteLine(bot1.Width);
+            
 
             Robot.Print();
 
