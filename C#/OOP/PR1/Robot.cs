@@ -10,7 +10,9 @@ namespace project
         private int weight;
         private byte[] coordinates = Array.Empty<byte>();
 
-        protected string surname;
+        protected string surname = "";
+
+        public string Name { get{ return name; } private set{} }
 
         public int Weight
         {
