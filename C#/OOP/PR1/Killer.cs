@@ -23,8 +23,8 @@ namespace project
 
         public override void printValues()
         {
-            base.printValues();
-
+            System.Console.WriteLine(this.Name + " weight " + this.Weight + ". Coordinates: ");
+            foreach(byte el in this.Coordinates) System.Console.WriteLine(el + " ");
             System.Console.WriteLine("Health: " + this.Health);
         }
         

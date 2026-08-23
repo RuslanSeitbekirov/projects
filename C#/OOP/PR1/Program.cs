@@ -8,7 +8,7 @@ namespace project
     {
         static void Main()
         {
-            Robot bot = new Robot("bot", 800, new byte[] {0, 0, 0});
+            Bot bot = new Bot("bot", 800, new byte[] {0, 0, 0});
             bot.printValues();
             
             
@@ -19,8 +19,11 @@ namespace project
             killer.Lazer();
 
             
-            // Robot bot1 = new Robot("bot");
-            // bot1.Width = -100;
+            Bot bot1 = new Bot();
+            bot1.Width = -100;
+
+
+
             // System.Console.WriteLine(bot1.Width);
             
 

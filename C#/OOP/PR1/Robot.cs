@@ -3,7 +3,7 @@ using System.Dynamic;
 
 namespace project
 {
-    class Robot
+    abstract class Robot
     {
         private static int count;
         private string name = "";
@@ -13,6 +13,7 @@ namespace project
         protected string surname = "";
 
         public string Name { get{ return name; } private set{} }
+        public byte[] Coordinates { get{ return coordinates; } private set{} }
 
         public int Weight
         {
@@ -65,11 +66,8 @@ namespace project
             this.coordinates = coordinates;
         }
 
-        public virtual void printValues()
-        {
-            System.Console.WriteLine(this.name + " weight " + this.weight + ". Coordinates: ");
-            foreach(byte el in coordinates) System.Console.WriteLine(el + " ");
-        }
+        public abstract void printValues();
+
 
         public static void Print()
         {
