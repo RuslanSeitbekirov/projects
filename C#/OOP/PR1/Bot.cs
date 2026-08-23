@@ -4,7 +4,7 @@ namespace project
 {
     
 
-    class Bot : Robot
+    class Bot : Robot, IRun
     {
         
 

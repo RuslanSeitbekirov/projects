@@ -3,7 +3,7 @@ using System.Dynamic;
 
 namespace project
 {
-    abstract class Robot
+    abstract class Robot : IRun, IJump
     {
         private static int count;
         private string name = "";
@@ -39,6 +39,8 @@ namespace project
         }
 
         public int Width{ get;  set;}
+        public float speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public float y { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public Robot(string name, int weight, byte[] coordinates)
         {
@@ -74,5 +76,14 @@ namespace project
             System.Console.WriteLine("Count is: {0}", count);
         }
 
+        public void RobotRun()
+        {
+            System.Console.WriteLine("Robot is run");
+        }
+
+        public void Jump()
+        {
+             System.Console.WriteLine("Robot is jump");
+        }
     }
 }
