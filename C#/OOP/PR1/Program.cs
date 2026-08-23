@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Dynamic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace project
 {
@@ -8,7 +9,8 @@ namespace project
     {
         static void Main()
         {
-            Bot bot = new Bot("bot", 800, new byte[] {0, 0, 0});
+
+            /*Bot bot = new Bot("bot", 800, new byte[] {0, 0, 0});
             bot.printValues();
             
             
@@ -21,7 +23,7 @@ namespace project
             
             Bot bot1 = new Bot();
             bot1.Width = -100;
-
+            */
 
 
             // System.Console.WriteLine(bot1.Width);
@@ -59,8 +61,27 @@ namespace project
             //     System.Console.WriteLine(obj is Robot); // is проверяет создан ли обьект на основе класса/типа данных
             // }
 
-
+            // Multiply(5.0f, 3.6f);
+            // Multiply(b:5, a:6);
         }
+
+
+        // public static void Multiply(int a, int b)
+        // {
+        //     int res = a * b;
+        //     System.Console.WriteLine("Result: " + res);
+        // }
+        // public static void Multiply(float a, float b)
+        // {
+        //     float res = a * b;
+        //     System.Console.WriteLine("Result:" + res);
+        // }
+        // public static void Multiply(int a, float b)
+        // {
+        //     float res = a * b;
+        //     System.Console.WriteLine("Result:" + res);
+        // }
+        
 
 
     }
