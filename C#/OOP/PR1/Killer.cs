@@ -1,8 +1,10 @@
 using System;
+using System.Xml;
 
 namespace project
 {
     
+    enum Type { Enemy, Hero, Traitor}
 
     class Killer : Robot
     {
@@ -13,11 +15,15 @@ namespace project
             set;
         }
 
+        public Type type;
+
+
         public Killer() {}
 
-        public Killer(string name, int weight, byte[] coordinates, int health) : base(name, weight, coordinates)
+        public Killer(string name, int weight, byte[] coordinates, int health, Type type) : base(name, weight, coordinates)
         {
             this.Health = health;
+            this.type = type;
             
         }
 
@@ -26,6 +32,11 @@ namespace project
             System.Console.WriteLine(this.Name + " weight " + this.Weight + ". Coordinates: ");
             foreach(byte el in this.Coordinates) System.Console.WriteLine(el + " ");
             System.Console.WriteLine("Health: " + this.Health);
+
+            if(this.type == Type.Hero)
+            {
+                System.Console.WriteLine("His hero!");
+            }
         }
         
 

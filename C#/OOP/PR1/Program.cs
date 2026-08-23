@@ -10,20 +10,20 @@ namespace project
         static void Main()
         {
 
-            /*Bot bot = new Bot("bot", 800, new byte[] {0, 0, 0});
-            bot.printValues();
+            // Bot bot = new Bot("bot", 800, new byte[] {0, 0, 0});
+            // bot.printValues();
             
             
-            Killer killer = new Killer("killer", 1000, new byte[] {2, 2, 4}, 100);
+            Killer killer = new Killer("killer", 1000, new byte[] {2, 2, 4}, 100, Type.Hero);
             // killer.setValues("killer", 1000, new byte[] {2, 2, 4});
             killer.printValues();
             // killer.Health = 100;
             killer.Lazer();
 
             
-            Bot bot1 = new Bot();
-            bot1.Width = -100;
-            */
+            // Bot bot1 = new Bot();
+            // bot1.Width = -100;
+            
 
 
             // System.Console.WriteLine(bot1.Width);
