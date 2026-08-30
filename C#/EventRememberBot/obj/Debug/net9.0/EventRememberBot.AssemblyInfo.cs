@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("pr_1")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("EventRememberBot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+105121fb5bf06d3d284c228a1e50c856fc574fda")]
-[assembly: System.Reflection.AssemblyProductAttribute("pr_1")]
-[assembly: System.Reflection.AssemblyTitleAttribute("pr_1")]
+[assembly: System.Reflection.AssemblyProductAttribute("EventRememberBot")]
+[assembly: System.Reflection.AssemblyTitleAttribute("EventRememberBot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.
