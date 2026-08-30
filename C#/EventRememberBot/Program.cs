@@ -1,98 +1,103 @@
-﻿using Telegram.Bot;
+﻿using System;
+using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using DotNetEnv;
+using MyTelegramBot;
+using Microsoft.Extensions.WebEncoders.Testing;
+using Superpower;
+// 1. Загружаем переменные из .env
+Env.Load();
 
-namespace MyTelegramBot;
+// 2. Читаем токен
+string token = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN") 
+               ?? throw new Exception("Токен бота не найден в файле .env!");
 
-class Program
+Console.WriteLine($"Бот с токеном {token[..5]}... инициализирован.");
+
+// 3. Создаем клиента бота
+var botClient = new TelegramBotClient(token);
+
+// 4. Проверяем связь с Telegram
+var me = await botClient.GetMe();
+Console.WriteLine($"✅ Бот {me.FirstName} (@{me.Username}) успешно запущен!");
+Console.WriteLine("Нажмите Ctrl+C для остановки.\n");
+
+// 5. Настраиваем отмену по Ctrl+C
+using CancellationTokenSource cts = new();
+Console.CancelKeyPress += (sender, eventArgs) =>
 {
-    // Вставьте сюда токен, который дал BotFather
-    private static readonly string Token = "8825595358:AAEaDfFAjo7yZNw2AGGQ-o-Ykp2VZNKrC1c";
+    cts.Cancel();
+    eventArgs.Cancel = true;
+};
 
-    static async Task Main(string[] args)
+// 6. Настройки получения обновлений (Long Polling)
+ReceiverOptions receiverOptions = new()
+{
+    AllowedUpdates = new[] { UpdateType.Message, UpdateType.CallbackQuery } // Добавил CallbackQuery на будущее для кнопок
+};
+
+// 7. Запускаем бесконечный цикл получения сообщений
+// В будущем updateHandler можно заменить на метод вашего отдельного класса-обработчика
+botClient.StartReceiving(
+    updateHandler: HandleUpdateAsync,
+    errorHandler: HandleErrorAsync,
+    receiverOptions: receiverOptions,
+    cancellationToken: cts.Token
+);
+
+// 8. Держим приложение запущенным
+await Task.Delay(Timeout.Infinite, cts.Token);
+
+
+// ==========================================
+// МЕТОДЫ ОБРАБОТКИ 
+// (В будущем их можно вынести в отдельный класс, например, BotUpdateHandler)
+// ==========================================
+
+ParsText.testclassconnect();
+
+static async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+{
+    if (update.Type == UpdateType.Message && update.Message is { } message)
     {
-        // 1. Создаем клиента бота
-        var botClient = new TelegramBotClient(Token);
+        long chatId = message.Chat.Id;
+        string? text = message.Text;
 
-        // 2. Проверяем связь с Telegram
-        var me = await botClient.GetMe();
-        Console.WriteLine($"Бот {me.FirstName} (@{me.Username}) запущен");
-        Console.WriteLine("Нажмите Ctrl+C для остановки.\n");
+        Console.WriteLine($"[Получено] От {message.From?.Username} (ID: {chatId}): {text}");
 
-        // 3. Настраиваем отмену по Ctrl+C
-        using CancellationTokenSource cts = new();
-        Console.CancelKeyPress += (sender, eventArgs) =>
+        // TODO: Здесь будет вызов вашего класса парсинга!
+        // Пример:
+        // var parser = new TextPars(text);
+        // if (parser.IsValidReminder) { ... }
+
+        if (text == "/start")
         {
-            cts.Cancel();
-            eventArgs.Cancel = true;
-        };
-
-        // 4. Настройки получения обновлений (Long Polling)
-        ReceiverOptions receiverOptions = new()
+            await botClient.SendMessage(
+                chatId: chatId,
+                text: $"Привет, {message.From?.FirstName}! Я твой бот-напоминалка на C#.\nОтправь мне текст и время, и я напомню!",
+                cancellationToken: cancellationToken
+            );
+        }
+        else
         {
-            // Указываем, какие типы обновлений мы хотим получать. 
-            // Пока ограничимся только текстовыми сообщениями.
-            AllowedUpdates = new[] { UpdateType.Message } 
-        };
-
-        // 5. Запускаем бесконечный цикл получения сообщений
-        botClient.StartReceiving(
-            updateHandler: HandleUpdateAsync,
-            errorHandler: HandleErrorAsync,
-            receiverOptions: receiverOptions,
-            cancellationToken: cts.Token
-        );
-
-        // 6. Держим приложение запущенным, пока не нажмут Ctrl+C
-        await Task.Delay(Timeout.Infinite, cts.Token);
-    }
-
-    // --- МЕТОДЫ ОБРАБОТКИ ---
-
-    // Сюда приходят все обновления от Telegram
-    static async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
-    {
-        // Проверяем, что это именно текстовое сообщение
-        if (update.Type == UpdateType.Message && update.Message is { } message)
-        {
-            long chatId = message.Chat.Id;
-            string? text = message.Text;
-
-            Console.WriteLine($"[Получено] От пользователя {message.From?.Username} (ID: {chatId}): {text}");
-
-            // Простая логика: если написали /start, отвечаем приветствием
-            if (text == "/start")
-            {
-                await botClient.SendTextMessageAsync(
-                    chatId: chatId,
-                    text: $"Привет, {message.From?.FirstName}! Я твой домашний бот на C#.",
-                    cancellationToken: cancellationToken
-                );
-            }
-            else
-            {
-                // Во всех остальных случаях просто возвращаем текст обратно (Эхо)
-                await botClient.SendTextMessageAsync(
-                    chatId: chatId,
-                    text: $"Вы написали: {text}",
-                    cancellationToken: cancellationToken
-                );
-            }
+            // Временный ответ, пока вы не реализуете парсинг
+            await botClient.SendMessage(
+                chatId: chatId,
+                text: $"Вы написали: {text}\n(Здесь скоро будет логика обработки напоминаний)",
+                cancellationToken: cancellationToken
+            );
         }
     }
+}
 
-    // Сюда попадают ошибки (например, нет интернета)
-    static Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
-    {
-        Console.WriteLine($"[ОШИБКА] {exception.Message}");
-        
-        // Если это ошибка сети, можно добавить задержку перед следующим запросом
-        if (exception is Telegram.Bot.Exceptions.ApiRequestException apiEx)
-        {
-            Console.WriteLine($"Код ошибки Telegram: {apiEx.ErrorCode}");
-        }
-
-        return Task.CompletedTask;
-    }
+static Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+{
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine($"[ОШИБКА СЕТИ/API] {exception.Message}");
+    Console.ResetColor();
+    
+    
+    return Task.CompletedTask;
 }
