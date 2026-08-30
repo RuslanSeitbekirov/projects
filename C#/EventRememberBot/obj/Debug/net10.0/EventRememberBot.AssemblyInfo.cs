@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EventRememberBot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f5b40eaf427a3a6ce119e54fa49fe1b296557226")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+105121fb5bf06d3d284c228a1e50c856fc574fda")]
 [assembly: System.Reflection.AssemblyProductAttribute("EventRememberBot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EventRememberBot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
