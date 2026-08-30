@@ -1,0 +1,6 @@
+[submodule "C#/ReminderBot"]
+	path = "C#/ReminderBot"
+	url = https://github.com/RuslanSeitbekirov/ReminderBot
+[submodule "ReminderBot"]
+	path = ReminderBot
+	url = https://github.com/RuslanSeitbekirov/ReminderBot
