@@ -1,6 +1,0 @@
-C:\projects\C#\EventRememberBot\obj\Debug\net8.0\EventRememberBot.csproj.AssemblyReference.cache
-C:\projects\C#\EventRememberBot\obj\Debug\net8.0\EventRememberBot.GeneratedMSBuildEditorConfig.editorconfig
-C:\projects\C#\EventRememberBot\obj\Debug\net8.0\EventRememberBot.AssemblyInfoInputs.cache
-C:\projects\C#\EventRememberBot\obj\Debug\net8.0\EventRememberBot.AssemblyInfo.cs
-C:\projects\C#\EventRememberBot\obj\Debug\net8.0\EventRememberBot.csproj.CoreCompileInputs.cache
-C:\projects\C#\EventRememberBot\obj\Debug\net8.0\EventRememberBot.sourcelink.json

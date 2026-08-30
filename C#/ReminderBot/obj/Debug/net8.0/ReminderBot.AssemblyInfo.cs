@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ReminderBot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df08936f1a28d51078ae36895c3cbac9c8e4149b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71071a86ee95197483eeed5f1bde687cfd64bc61")]
 [assembly: System.Reflection.AssemblyProductAttribute("ReminderBot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ReminderBot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
