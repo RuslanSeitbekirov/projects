@@ -39,18 +39,30 @@
             "id": "6623f255d5949967",
             "type": "leaf",
             "state": {
+              "type": "image",
+              "state": {
+                "file": "IMG/Pasted image 20260217155921.png"
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20260217155921"
+            }
+          },
+          {
+            "id": "f6d5ca55a15c4cd7",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
-                "file": "C#/Функции и классы.md",
+                "file": "Социальная инженерия/Темы лекций.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Функции и классы"
+              "title": "Темы лекций"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -70,9 +82,7 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false,
-                "showSearch": false,
-                "searchQuery": ""
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Файловый менеджер"
@@ -235,19 +245,21 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "6623f255d5949967",
+  "active": "f6d5ca55a15c4cd7",
   "lastOpenFiles": [
-    "Pasted image 20260823221107.png",
+    "IMG/Pasted image 20260217155921.png",
+    "Социальная инженерия/Темы лекций.md",
+    "Социальная инженерия",
+    "Без названия.base",
     "Pasted image 20260823221010.png",
     "Pasted image 20260823213922.png",
+    "C#/Функции и классы.md",
+    "Pasted image 20260823221107.png",
     "C#/Типы данных. Преобразование и действия с ними.md",
     "C#/Ввод и вывод..md",
-    "C#/Функции и классы.md",
     "IMG/Pasted image 20260823213647.png",
     "IMG/Pasted image 20260823213546.png",
     "C#/Обработчик ошибок Try - catch.md",
-    "Без названия.base",
-    "Без названия.md",
     "README.md",
     "Без названия 1.base",
     "Алгебра/Математика 15.09.md",
@@ -263,7 +275,6 @@
     "IMG/Pasted image 20260320211637.png",
     "Pasted image 20260320211634.png",
     "IMG/Pasted image 20260320211515.png",
-    "Pasted image 20260320211440.png",
     "ОРГ/Лекция 2. 04.03.2026.md",
     "Лабораторные по дискретке/паб2.md",
     "Untitled.base",
@@ -276,7 +287,6 @@
     "История России/Конспект_лекции_по_древнерусской_истории_15_09.md",
     "История России",
     "Алгебра",
-    "лабораторные по дискретке/Лабораторная 1.md",
-    "IMG"
+    "лабораторные по дискретке/Лабораторная 1.md"
   ]
 }

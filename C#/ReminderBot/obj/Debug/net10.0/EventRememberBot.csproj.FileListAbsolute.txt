@@ -16,3 +16,12 @@ C:\projects\C#\EventRememberBot\obj\Debug\net10.0\refint\EventRememberBot.dll
 C:\projects\C#\EventRememberBot\obj\Debug\net10.0\EventRememberBot.pdb
 C:\projects\C#\EventRememberBot\obj\Debug\net10.0\EventRememberBot.genruntimeconfig.cache
 C:\projects\C#\EventRememberBot\obj\Debug\net10.0\ref\EventRememberBot.dll
+C:\projects\C#\ReminderBot\obj\Debug\net10.0\EventRememberBot.csproj.AssemblyReference.cache
+C:\projects\C#\ReminderBot\obj\Debug\net10.0\EventRememberBot.GeneratedMSBuildEditorConfig.editorconfig
+C:\projects\C#\ReminderBot\obj\Debug\net10.0\EventRememberBot.AssemblyInfoInputs.cache
+C:\projects\C#\ReminderBot\obj\Debug\net10.0\EventRememberBot.AssemblyInfo.cs
+C:\projects\C#\ReminderBot\obj\Debug\net10.0\EventRememberBot.csproj.CoreCompileInputs.cache
+C:\projects\C#\ReminderBot\obj\Debug\net10.0\EventRememberBot.sourcelink.json
+C:\projects\C#\ReminderBot\obj\Debug\net10.0\EventRememberBot.dll
+C:\projects\C#\ReminderBot\obj\Debug\net10.0\refint\EventRememberBot.dll
+C:\projects\C#\ReminderBot\obj\Debug\net10.0\EventRememberBot.pdb
