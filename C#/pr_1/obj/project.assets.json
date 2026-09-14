@@ -8,24 +8,32 @@
     "net10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Melvor\\.nuget\\packages\\": {}
+    "C:\\Users\\Melvor\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\projects\\C#\\pr_1\\pr_1.csproj",
+      "projectUniqueName": "C:\\projects\\Education\\C#\\pr_1\\pr_1.csproj",
       "projectName": "pr_1",
-      "projectPath": "C:\\projects\\C#\\pr_1\\pr_1.csproj",
+      "projectPath": "C:\\projects\\Education\\C#\\pr_1\\pr_1.csproj",
       "packagesPath": "C:\\Users\\Melvor\\.nuget\\packages\\",
-      "outputPath": "C:\\projects\\C#\\pr_1\\obj\\",
+      "outputPath": "C:\\projects\\Education\\C#\\pr_1\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Melvor\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Melvor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

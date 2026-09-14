@@ -1,0 +1,23 @@
+﻿<Window x:Class="App1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:App1"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Foreground="{DynamicResource Theme_TextBrush}" d:DesignWidth="1360" d:DesignHeight="768">
+
+    <Grid Background="{DynamicResource Theme_BackgroundBrush}">
+        <TextBlock FontSize="23" Margin="32,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Ваше значение:"/>
+        <Button Name="MyButton" Content="В строку" Click="OnButtonClick" Margin="40,104,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32"/>
+        <TextBox Margin="216,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="32" Background="#FF34BB16" >
+            <TextBox.Foreground>
+                <SolidColorBrush Color="{DynamicResource Theme_TextColor}" />
+            </TextBox.Foreground>
+        </TextBox>
+        <TextBlock Text="Вывод результата:" FontSize="23" Margin="32,208,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="224" />
+        <TextBox Margin="256,208,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="32" Background="#FFC20606" />
+        <Button Margin="144,104,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Height="32" Content="В целое число" />
+        <Button Content="в дробь" Margin="320,104,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="32" />
+    </Grid>
+</Window>
