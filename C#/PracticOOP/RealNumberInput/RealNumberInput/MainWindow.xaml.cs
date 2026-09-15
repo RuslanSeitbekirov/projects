@@ -74,5 +74,10 @@ namespace RealNumberInput
 
             return ValidNumberRegex.IsMatch(text);
         }
+
+        private void NumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
