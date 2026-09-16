@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace fcbfkf.Properties
+namespace SquareRootApp.Properties
 {
 
 
