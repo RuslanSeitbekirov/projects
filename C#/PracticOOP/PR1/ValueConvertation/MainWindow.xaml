@@ -1,31 +1,91 @@
 <Window x:Class="ValueConvertation.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Преобразование систем счисления"
-        Height="520" Width="640"
+        Title="Перевод в двоичную и произвольную систему счисления"
+        Height="620" Width="500"
         WindowStartupLocation="CenterScreen">
     <Grid Margin="15">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>  <!-- 0 -->
+            <RowDefinition Height="Auto"/>  <!-- 1 -->
+            <RowDefinition Height="Auto"/>  <!-- 2 -->
+            <RowDefinition Height="Auto"/>  <!-- 3 -->
+            <RowDefinition Height="Auto"/>  <!-- 4 -->
+            <RowDefinition Height="Auto"/>  <!-- 5 -->
+            <RowDefinition Height="Auto"/>  <!-- 6 -->
+            <RowDefinition Height="Auto"/>  <!-- 7: Separator -->
+            <RowDefinition Height="Auto"/>  <!-- 8: заголовок 3.3 -->
+            <RowDefinition Height="Auto"/>  <!-- 9 -->
+            <RowDefinition Height="Auto"/>  <!-- 10 -->
+            <RowDefinition Height="Auto"/>  <!-- 11 -->
+            <RowDefinition Height="Auto"/>  <!-- 12 -->
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock Text="Исходный тип:" VerticalAlignment="Center" Width="90"/>
-            <ComboBox x:Name="sourceTypeCombo" Width="90"/>
+        <!-- ===== Задание 3.1: перевод в двоичную систему ===== -->
+        <TextBlock Grid.Row="0" Text="Задание 3.1. Перевод целого числа в двоичную систему"
+                   FontWeight="Bold" Margin="0,0,0,8"/>
 
-            <TextBlock Text="Значение:" VerticalAlignment="Center" Width="70" Margin="15,0,0,0"/>
-            <TextBox x:Name="valueTextBox" Width="120" Padding="3"/>
-
-            <TextBlock Text="Целевой тип:" VerticalAlignment="Center" Width="90" Margin="15,0,0,0"/>
-            <ComboBox x:Name="targetTypeCombo" Width="90"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBlock Text="Введите целое число:" Width="160" VerticalAlignment="Center"/>
+            <TextBox x:Name="inputTextBox" Width="150" Padding="3"/>
+            <Button x:Name="convertButton" Content="Перевести"
+                    Width="100" Margin="10,0,0,0" Click="convertButton_Click"/>
         </StackPanel>
 
-        <Button x:Name="convertButton" Grid.Row="1" Content="Преобразовать"
-                Width="150" HorizontalAlignment="Left" Click="convertButton_Click"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,20">
+            <TextBlock Text="Двоичное представление:" Width="160"/>
+            <Label x:Name="binaryLabel" Content="—" FontWeight="Bold" FontFamily="Consolas"/>
+        </StackPanel>
 
-        <ListBox x:Name="resultsListBox" Grid.Row="2" Margin="0,10,0,0"
-                 FontFamily="Consolas" FontSize="13"/>
+        <Separator Grid.Row="3" Margin="0,0,0,15"/>
+
+        <!-- ===== Задание 3.2: обязательное дополнение — произвольная система счисления ===== -->
+        <TextBlock Grid.Row="4" Text="Задание 3.2 (обязательное дополнение). Перевод в систему счисления 2–16"
+                   FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,8"/>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBlock Text="Введите целое число:" Width="160" VerticalAlignment="Center"/>
+            <TextBox x:Name="baseInputTextBox" Width="100" Padding="3"/>
+            <TextBlock Text="Основание (2–16):" Width="120" Margin="15,0,0,0" VerticalAlignment="Center"/>
+            <TextBox x:Name="radixTextBox" Width="40" Padding="3"/>
+            <Button x:Name="convertBaseButton" Content="Перевести"
+                    Width="90" Margin="10,0,0,0" Click="convertBaseButton_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="6" Orientation="Horizontal" VerticalAlignment="Top">
+            <TextBlock Text="Результат:" Width="160"/>
+            <Label x:Name="baseResultLabel" Content="—" FontWeight="Bold" FontFamily="Consolas"/>
+        </StackPanel>
+
+        <Separator Grid.Row="7" Margin="0,0,0,15"/>
+
+        <!-- ===== Задание 3.3: обязательное дополнение — арабские <-> римские числа ===== -->
+        <TextBlock Grid.Row="8" Text="Задание 3.3 (обязательное дополнение). Арабские ↔ римские числа"
+                   FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,8"/>
+
+        <StackPanel Grid.Row="9" Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBlock Text="Арабское число (1–3999):" Width="160" VerticalAlignment="Center"/>
+            <TextBox x:Name="arabicTextBox" Width="100" Padding="3"/>
+            <Button x:Name="toRomanButton" Content="В римское →"
+                    Width="110" Margin="10,0,0,0" Click="toRomanButton_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="10" Orientation="Horizontal" Margin="0,0,0,15">
+            <TextBlock Text="Результат:" Width="160"/>
+            <Label x:Name="romanResultLabel" Content="—" FontWeight="Bold" FontFamily="Consolas"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="11" Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBlock Text="Римское число:" Width="160" VerticalAlignment="Center"/>
+            <TextBox x:Name="romanTextBox" Width="150" Padding="3" CharacterCasing="Upper"/>
+            <Button x:Name="toArabicButton" Content="В арабское →"
+                    Width="110" Margin="10,0,0,0" Click="toArabicButton_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="12" Orientation="Horizontal">
+            <TextBlock Text="Результат:" Width="160"/>
+            <Label x:Name="arabicResultLabel" Content="—" FontWeight="Bold" FontFamily="Consolas"/>
+        </StackPanel>
     </Grid>
 </Window>

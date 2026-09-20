@@ -1,6 +1,8 @@
 ﻿using System;
 
-int x = 1234567893634636;
-float f = x;
+string start = "140";
 
-Console.WriteLine(f); // 1.234568E+08 — последние цифры потер
+int bin = Convert.ToInt32(start, 5); // "11111111"
+
+
+Console.WriteLine(bin); // 1.234568E+08 — последние цифры потер
