@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace RealNumberInput
+namespace RealNumberInput 
 {
     public partial class MainWindow : Window
     {
