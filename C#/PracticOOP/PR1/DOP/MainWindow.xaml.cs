@@ -110,7 +110,7 @@ namespace TypeConversionApp
         // ---- Проверка неявного преобразования через dynamic-присваивание ----
         private static string TryImplicitConvert(dynamic value, string targetType)
         {
-            try
+            try 
             {
                 switch (targetType)
                 {

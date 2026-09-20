@@ -1,0 +1,31 @@
+<Window x:Class="ValueConvertation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Преобразование систем счисления"
+        Height="520" Width="640"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Исходный тип:" VerticalAlignment="Center" Width="90"/>
+            <ComboBox x:Name="sourceTypeCombo" Width="90"/>
+
+            <TextBlock Text="Значение:" VerticalAlignment="Center" Width="70" Margin="15,0,0,0"/>
+            <TextBox x:Name="valueTextBox" Width="120" Padding="3"/>
+
+            <TextBlock Text="Целевой тип:" VerticalAlignment="Center" Width="90" Margin="15,0,0,0"/>
+            <ComboBox x:Name="targetTypeCombo" Width="90"/>
+        </StackPanel>
+
+        <Button x:Name="convertButton" Grid.Row="1" Content="Преобразовать"
+                Width="150" HorizontalAlignment="Left" Click="convertButton_Click"/>
+
+        <ListBox x:Name="resultsListBox" Grid.Row="2" Margin="0,10,0,0"
+                 FontFamily="Consolas" FontSize="13"/>
+    </Grid>
+</Window>
