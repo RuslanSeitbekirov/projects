@@ -30,14 +30,14 @@ namespace ValueConvertation
             int i;
             if (!int.TryParse(inputTextBox.Text, out i))
             {
-                MessageBox.Show("TextBox does not contain an integer");
+                MessageBox.Show("TextBox несодержит целое число");
                 return;
             }
 
             // 2. Проверяем, что число неотрицательное
             if (i < 0)
             {
-                MessageBox.Show("Please enter a positive number or zero");
+                MessageBox.Show("Вводите число >= 0");
                 return;
             }
 
@@ -52,14 +52,16 @@ namespace ValueConvertation
             int remainder = 0;
 
             // 5. StringBuilder для построения двоичного представления
+            // Не создает новый объект строки в памяти на каждой итерации, что экономит ресурсы
             StringBuilder binary = new StringBuilder();
 
             // 6. Основной цикл перевода в двоичную систему
+            // гарантирует что тело вполница хотя бы раз.
             do
             {
                 remainder = i % 2;              // a. остаток от деления i на 2
                 i = i / 2;                       // b. целочисленное деление i на 2
-                binary.Insert(0, remainder);     // c. добавляем цифру в начало строки
+                binary.Insert(0, remainder);     // c. добавляем цифру в начало строки (индекс куда, что вставляем)
             }
             while (i > 0);
 
@@ -81,7 +83,7 @@ namespace ValueConvertation
             int number;
             if (!int.TryParse(baseInputTextBox.Text, out number))
             {
-                MessageBox.Show("TextBox does not contain an integer");
+                MessageBox.Show("TextBox несодержит целое число");
                 return;
             }
 
@@ -89,13 +91,13 @@ namespace ValueConvertation
             int radix;
             if (!int.TryParse(radixTextBox.Text, out radix))
             {
-                MessageBox.Show("Radix must be an integer");
+                MessageBox.Show("Основание системы не целое число");
                 return;
             }
 
             if (radix < 2 || radix > 16)
             {
-                MessageBox.Show("Radix must be between 2 and 16");
+                MessageBox.Show("Основание системы приндлежит от 2 до 16");
                 return;
             }
 
@@ -116,9 +118,9 @@ namespace ValueConvertation
 
             while (value > 0)
             {
-                int remainder = value % radix;
-                result.Insert(0, HexDigits[remainder]);
-                value = value / radix;
+                int remainder = value % radix; // ищем остаток
+                result.Insert(0, HexDigits[remainder]); //Добавляем символ из таблицы по индексу
+                value = value / radix; // уменьшаем value для следующей итерации
             }
 
             // 6. Добавляем знак минус, если исходное число было отрицательным
@@ -128,18 +130,18 @@ namespace ValueConvertation
             baseResultLabel.Content = result.ToString();
         }
 
-                // ===================================================================
+        // ===================================================================
         // Задание 3.3 (обязательное дополнение).
         // Перевод арабского числа в римское и обратно, с использованием
         // таблицы соответствия значений и римских символов.
-        //
-        // Примечание: в таблице задания опечатка — пара (9,"IV") дублирует
-        // (4,"IV"). Корректная пара для девяти — (9,"IX"). Ниже используется
-        // исправленная таблица.
         // ===================================================================
 
-        // Таблица соответствия, ОБЯЗАТЕЛЬНО отсортирована по убыванию значения —
+        // Таблица соответствия, отсортирована по убыванию значений —
         // это нужно для «жадного» алгоритма перевода в обе стороны.
+        // static означает, что таблица общая для всех экземпляров окна 
+        // (не дублируется в памяти).
+        // readonly гарантирует, что массив инициализируется один раз при
+        // загрузке класса и не может быть перезаписан.
         private static readonly (int Value, string Symbol)[] RomanTable =
         {
             (1000, "M"),
@@ -163,14 +165,16 @@ namespace ValueConvertation
             int number;
             if (!int.TryParse(arabicTextBox.Text, out number))
             {
-                MessageBox.Show("TextBox does not contain an integer");
+                MessageBox.Show("TextBox несодержит целое число");
                 return;
             }
 
             // Римские цифры классически определены для диапазона 1..3999
+            // Классические римские цифры без специальных надстрочных знаков
+            // максимально корректно представляют числа до 3999 (MMMCMXCIX).
             if (number < 1 || number > 3999)
             {
-                MessageBox.Show("Please enter a number from 1 to 3999");
+                MessageBox.Show("Введите число от 1 до 3999");
                 return;
             }
 
@@ -202,15 +206,17 @@ namespace ValueConvertation
 
             if (string.IsNullOrEmpty(roman))
             {
-                MessageBox.Show("Please enter a roman numeral");
+                MessageBox.Show("Введите римские цифры");
                 return;
             }
-
+            // Тип возвращаемого значения, который может быть либо целым числом,
+            // либо null. Используется для сигнализации о том, что строка 
+            // содержала недопустимые римские символы.
             int? result = RomanToArabic(roman);
 
             if (result == null)
             {
-                MessageBox.Show("TextBox does not contain a valid roman numeral");
+                MessageBox.Show("TextBox несодердит правильное римское число");
                 return;
             }
 
@@ -225,6 +231,10 @@ namespace ValueConvertation
             // начинается с символа из таблицы — «снимаем» его и прибавляем значение
             foreach (var pair in RomanTable)
             {
+                // Проверяет, начинается ли текущая строка roman с определенного 
+                // римского символа.
+                // StringComparison.Ordinal обеспечивает быстрое и точное 
+                // посимвольное сравнение без учета языковых настроек.
                 while (roman.StartsWith(pair.Symbol, StringComparison.Ordinal))
                 {
                     result += pair.Value;
