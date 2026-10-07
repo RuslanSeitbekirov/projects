@@ -113,7 +113,7 @@ namespace TypeConversionDemo
             Console.WriteLine($"double.Parse(\"{strDouble}\") = {parsedDouble}");
 
             // Метод TryParse (безопасный, не вызывает исключений, возвращает bool)
-            if (int.TryParse(invalidStr, out int result))
+            if (int.TryParse(invalidStr, out var result))
             {
                 Console.WriteLine($"Успешно: {result}");
             }

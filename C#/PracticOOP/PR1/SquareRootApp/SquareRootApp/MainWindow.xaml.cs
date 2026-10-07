@@ -91,14 +91,14 @@ namespace SquareRootApp
             if (_newtonFinished) return;
 
             _guess = _result;
-            _result = ((_numberDecimal / _guess) + _guess) / 2;
+            _result = ((_numberDecimal / _guess) + _guess) / 2m;
             _iteration++;
 
             decimal error = Math.Abs(_result - _guess);
             LogIteration(_iteration, _result, error);
             iterationCountText.Text = "Итерация: " + _iteration;
 
-            if (error <= _delta)
+            if (error <= _delta) 
             {
                 FinishNewton();
             }

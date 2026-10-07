@@ -48,7 +48,7 @@ public partial class MainWindow : Window
     private void RandomColorButton_Click(object sender, RoutedEventArgs e)
     {
         /// <summary>
-        /// Смена цвета текста на случайный в палитре RGB
+        /// Смена цвета текста на случайный в палитре RGB 
         /// </summary>
         Cube.Foreground = new SolidColorBrush(Color.FromRgb(
             (byte)random.Next(0, 255),

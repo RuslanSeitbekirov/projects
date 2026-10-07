@@ -2,7 +2,7 @@
 using System.Text;
 using System.Windows;
 
-namespace ValueConvertation
+namespace ValueConvertation 
 {
     public partial class MainWindow : Window
     {
