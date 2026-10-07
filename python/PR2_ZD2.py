@@ -1,90 +1,97 @@
-import math
+# ПР-2, задание 2: проверка гипотезы об экспоненциальной аппроксимации (numpy + sympy + matplotlib)
+import numpy as np
+import sympy as sp
+from sympy.stats import FDistribution, cdf
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
-# ============ ЗАДАНИЕ 2: экспоненциальная аппроксимация y = c + a*exp(b*x) ============
-y = [1.7,-5.4,-4.0,-5.9,-1.6,0.0,0.6,2.1,0.1,-4.9,-3.5,5.9,8.5,9.9,13.3,11.1,14.4,16.2]
-x = list(range(1, len(y)+1))
+# ---------- ЭТАП 0. Данные и уровень значимости ----------
+y = np.array([1.7, -5.4, -4.0, -5.9, -1.6, 0.0, 0.6, 2.1, 0.1, -4.9,
+              -3.5, 5.9, 8.5, 9.9, 13.3, 11.1, 14.4, 16.2])
+x = np.arange(1, len(y) + 1)
+n = len(y)
+alpha = 0.05
+print("=== ЭТАП 0. Данные ===")
+print("y =", y.tolist()); print("n =", n, "| alpha =", alpha)
 
-def linfit(u, v):                       # v = c + a*u (МНК)
-    n = len(u); mu = sum(u)/n; mv = sum(v)/n
-    suu = sum((ui-mu)**2 for ui in u)
-    a = sum((ui-mu)*(vi-mv) for ui, vi in zip(u, v)) / suu
-    return mv - a*mu, a
+# ---------- ЭТАП 1. Модель и МНК в символьном виде (sympy) ----------
+# Данные содержат отрицательные значения, поэтому берём y = c + a*exp(b*x).
+# При фиксированном b модель линейна по (c, a): решаем нормальные уравнения символьно.
+print("\n=== ЭТАП 1. Модель и нормальные уравнения ===")
+c, a, b, xs = sp.symbols("c a b x")
+print("Модель: y(x) =", c + a * sp.exp(b * xs))
+n_s, Su, Suu, Sy, Suy = sp.symbols("n Su Suu Sy Suy")   # суммы по u=exp(b*x)
+sol = sp.solve([sp.Eq(n_s*c + Su*a, Sy), sp.Eq(Su*c + Suu*a, Suy)], [c, a])
+print("Нормальные уравнения: n*c + Su*a = Sy;  Su*c + Suu*a = Suy")
+print("Решение: c =", sol[c], ";  a =", sol[a])
+f_ca = sp.lambdify((n_s, Su, Suu, Sy, Suy), (sol[c], sol[a]), "numpy")
 
-def sse_for_b(b):
-    u = [math.exp(b*xi) for xi in x]
-    c, a = linfit(u, y)
-    return sum((yi - c - a*ui)**2 for yi, ui in zip(y, u)), c, a
+def fit_for_b(bv):
+    """При заданном b возвращает (SSE, c, a)."""
+    u = np.exp(bv * x)
+    cv, av = f_ca(n, u.sum(), (u**2).sum(), y.sum(), (u * y).sum())
+    return np.sum((y - cv - av * u)**2), cv, av
 
-def fit_exp():
-    grid = [i/1000 for i in range(-1000, 1001) if abs(i) >= 5]
-    b = min(grid, key=lambda t: sse_for_b(t)[0])
-    lo, hi = b-0.001, b+0.001           # золотое сечение
-    g = (math.sqrt(5)-1)/2
-    for _ in range(80):
-        m1, m2 = hi-g*(hi-lo), lo+g*(hi-lo)
-        if sse_for_b(m1)[0] < sse_for_b(m2)[0]: hi = m2
-        else: lo = m1
-    b = (lo+hi)/2
-    sse, c, a = sse_for_b(b)
-    return c, a, b, sse
+# ---------- ЭТАП 2. Подбор параметра b ----------
+print("\n=== ЭТАП 2. Подбор b (сетка с последовательным сужением) ===")
+lo, hi = -1.0, 1.0
+for it in range(6):
+    grid = np.linspace(lo, hi, 2001)
+    grid = grid[np.abs(grid) > 1e-3]               # b=0 вырожденный случай
+    sse_grid = np.array([fit_for_b(g)[0] for g in grid])
+    b_best = grid[sse_grid.argmin()]
+    step = (hi - lo) / 2000
+    lo, hi = b_best - 2 * step, b_best + 2 * step
+    print(f"итерация {it+1}: b = {b_best:.6f}, SSE = {sse_grid.min():.4f}")
+sse, c_hat, a_hat = fit_for_b(b_best)
+print(f"\nИтоговая модель: y = {c_hat:.4f} + {a_hat:.5f}*exp({b_best:.5f}*x)")
 
-# F-распределение: p-value через неполную бета-функцию
-def betacf(a, b, x):
-    tiny = 1e-300; qab, qap, qam = a+b, a+1, a-1
-    c = 1.0; d = 1-qab*x/qap; d = tiny if abs(d) < tiny else d; d = 1/d; h = d
-    for m in range(1, 300):
-        m2 = 2*m
-        aa = m*(b-m)*x/((qam+m2)*(a+m2))
-        d = 1+aa*d; d = tiny if abs(d) < tiny else d
-        c = 1+aa/c; c = tiny if abs(c) < tiny else c
-        d = 1/d; h *= d*c
-        aa = -(a+m)*(qab+m)*x/((a+m2)*(qap+m2))
-        d = 1+aa*d; d = tiny if abs(d) < tiny else d
-        c = 1+aa/c; c = tiny if abs(c) < tiny else c
-        d = 1/d; de = d*c; h *= de
-        if abs(de-1) < 1e-14: break
-    return h
+# ---------- ЭТАП 3. Качество аппроксимации ----------
+print("\n=== ЭТАП 3. Качество ===")
+y_hat = c_hat + a_hat * np.exp(b_best * x)
+res = y - y_hat
+sst = np.sum((y - y.mean())**2)
+print(f"SSE = {sse:.3f}, SST = {sst:.3f}, R^2 = {1 - sse/sst:.4f}")
+lin = np.polyfit(x, y, 1); sse_lin = np.sum((y - np.polyval(lin, x))**2)
+print(f"Линейная модель для сравнения: SSE = {sse_lin:.3f}, R^2 = {1 - sse_lin/sst:.4f}")
 
-def betai(a, b, x):
-    if x <= 0: return 0.0
-    if x >= 1: return 1.0
-    bt = math.exp(math.lgamma(a+b)-math.lgamma(a)-math.lgamma(b)+a*math.log(x)+b*math.log(1-x))
-    if x < (a+1)/(a+b+2): return bt*betacf(a, b, x)/a
-    return 1 - bt*betacf(b, a, 1-x)/b
+# ---------- ЭТАП 4. F-критерий значимости (sympy.stats для F-распределения) ----------
+print("\n=== ЭТАП 4. Проверка гипотезы ===")
+print("H0: модель не объясняет изменчивость ряда; H1: экспонента значимо описывает ряд")
+k = 3                                             # число параметров (c, a, b)
+d1, d2 = k - 1, n - k
+F = ((sst - sse) / d1) / (sse / d2)
+F_cdf = sp.lambdify(sp.Symbol("t"), cdf(FDistribution("F", d1, d2))(sp.Symbol("t", positive=True)), "mpmath")
+p_value = float(1 - F_cdf(F))
+lo_, hi_ = 0.0, 1000.0                            # критическое значение бисекцией
+for _ in range(100):
+    mid = (lo_ + hi_) / 2
+    if 1 - F_cdf(mid) > alpha: lo_ = mid
+    else: hi_ = mid
+F_crit = (lo_ + hi_) / 2
+print(f"F = {F:.3f}; F_крит(alpha={alpha}; {d1}, {d2}) = {F_crit:.3f}; p-value = {p_value:.2e}")
+print("Вывод:", "гипотеза об экспоненциальной аппроксимации НЕ отвергается" if F > F_crit
+      else "гипотеза отвергается")
 
-def f_pvalue(F, d1, d2):                # P(F_{d1,d2} > F)
-    return betai(d2/2, d1/2, d2/(d2+d1*F))
+# ---------- ЭТАП 5. Анализ остатков ----------
+print("\n=== ЭТАП 5. Остатки ===")
+signs = res > 0
+runs = 1 + int(np.sum(signs[1:] != signs[:-1]))
+print("Остатки:", np.round(res, 2).tolist())
+print(f"Число серий знаков: {runs} из {n} (для случайных остатков ожидается ~{n//2+1})")
 
-def f_critical(alpha, d1, d2):          # бисекция
-    lo, hi = 0.0, 1000.0
-    for _ in range(200):
-        mid = (lo+hi)/2
-        if f_pvalue(mid, d1, d2) > alpha: lo = mid
-        else: hi = mid
-    return (lo+hi)/2
-
-def approx_test(alpha=0.05):
-    n = len(y); my = sum(y)/n
-    c, a, b, sse = fit_exp()
-    sst = sum((v-my)**2 for v in y)
-    k = 3                                # c, a, b
-    d1, d2 = k-1, n-k
-    F = ((sst-sse)/d1) / (sse/d2)
-    Fcr, p = f_critical(alpha, d1, d2), f_pvalue(F, d1, d2)
-    print(f"\nМодель: y = {c:.4f} + {a:.5f}*exp({b:.4f}*x)")
-    print(f"SSE={sse:.3f}, SST={sst:.3f}, R^2={1-sse/sst:.4f}")
-    print(f"F={F:.3f}, F_крит(alpha={alpha}; {d1},{d2})={Fcr:.3f}, p={p:.2e}")
-    print("Вывод:", "гипотеза не отвергается (экспонента значимо описывает ряд)" if F > Fcr
-          else "гипотеза отвергается")
-    # сравнение с линейной моделью
-    c1, a1 = linfit(x, y)
-    sse1 = sum((yi-c1-a1*xi)**2 for xi, yi in zip(x, y))
-    print(f"Для сравнения линейная: SSE={sse1:.3f}, R^2={1-sse1/sst:.4f}")
-    # критерий серий по знакам остатков (случайность остатков)
-    res = [yi-c-a*math.exp(b*xi) for xi, yi in zip(x, y)]
-    s = [r > 0 for r in res]
-    runs = 1+sum(s[i] != s[i-1] for i in range(1, n))
-    print("Число серий знаков остатков:", runs, "из", n)
-
-if __name__ == "__main__":
-    approx_test(0.05)
+# ---------- ЭТАП 6. Графики ----------
+fig, ax = plt.subplots(1, 3, figsize=(16, 4.5))
+xx = np.linspace(1, n, 200)
+ax[0].plot(x, y, "o", label="данные")
+ax[0].plot(xx, c_hat + a_hat * np.exp(b_best * xx), "r", label="экспонента")
+ax[0].plot(xx, np.polyval(lin, xx), "g--", label="линейная")
+ax[0].set(title="Аппроксимация", xlabel="x", ylabel="y"); ax[0].legend(); ax[0].grid(True)
+ax[1].stem(x, res); ax[1].axhline(0, color="k")
+ax[1].set(title="Остатки", xlabel="x"); ax[1].grid(True)
+bb = np.linspace(0.01, 0.5, 200)
+ax[2].plot(bb, [fit_for_b(v)[0] for v in bb]); ax[2].axvline(b_best, color="r", ls="--")
+ax[2].set(title="SSE(b)", xlabel="b", ylabel="SSE"); ax[2].grid(True)
+plt.tight_layout(); plt.savefig("task2_plot.png", dpi=120)
+print("\nГрафик сохранён: task2_plot.png")
