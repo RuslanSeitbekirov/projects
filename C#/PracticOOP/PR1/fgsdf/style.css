@@ -1,0 +1,19 @@
+css
+.modal {
+  display: none; /* Скрыто по умолчанию */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5); /* Затемнение фона */
+}
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  width: 300px;
+}
+.close {
+  float: right;
+  cursor: pointer;
+  font-size: 24px;
+}
