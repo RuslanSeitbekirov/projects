@@ -1,16 +1,15 @@
-# ПР-2, задание 1: проверка гипотезы о стрельбе (numpy + sympy + matplotlib)
 import math
 import numpy as np
 import sympy as sp
 from sympy.stats import Binomial, P as prob
 import matplotlib
 matplotlib.use("Agg")                    # сохраняем график в файл
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
 
 # ---------- ЭТАП 0. Входные параметры (меняются пользователем) ----------
 n = 50      # число испытаний (выстрелов)
-m = 9       # наблюдаемое число промахов
-p0 = 0.3     # вероятность промаха по H0
+m = 40     # наблюдаемое число промахов
+p0 = 0.3     # вероятность промаха по H0 /
 p1 = 0.5     # вероятность промаха по H1
 alpha = 0.05    # уровень значимости
 target_power = 0.8     # желаемая мощность
@@ -20,22 +19,25 @@ def pmf(n, p):
     """Вектор P(X=k), k=0..n, для Bin(n,p)."""
     k = np.arange(n + 1) #создает массив целых чисел [0, 1, 2, ..., n].
     comb = np.array([math.comb(n, int(i)) for i in k], dtype=float)
-    #math.comb(n, int(i)): вычисляет биномиальный коэффициент CnkC_n^k Cnk​ (число сочетаний).
+    #math.comb(n, int(i)): вычисляет биномиальный коэффициент​ (число сочетаний).
     #np.array([...], dtype=float): преобразует список сочетаний в массив чисел с плавающей точкой.
     return comb * p**k * (1 - p)**(n - k)
     #comb * p**k * (1 - p)**(n - k): векторизованная формула Бернулли. NumPy автоматически применяет формулу к каждому элементу массива, возвращая массив вероятностей.
 
+#ищет индексы критических границ (краснный пунктир на графике)
 def critical(n, p0, alpha):
     """Границы двусторонней критической области: m<=k_low или m>=k_high."""
     P = pmf(n, p0)
-    cdf_ = np.cumsum(P)                   # P(X<=k)
-    sf_  = np.cumsum(P[::-1])[::-1]       # P(X>=k)
-    low  = np.where(cdf_ <= alpha / 2)[0]
-    high = np.where(sf_  <= alpha / 2)[0]
-    k_low  = int(low[-1]) if low.size else None     # None -> нижней границы нет
-    k_high = int(high[0]) if high.size else None
+    cdf_ = np.cumsum(P)                   # P(X<=k) - накопленная сумма слева
+    sf_  = np.cumsum(P[::-1])[::-1]       # P(X>=k) - накопленная сумма справа
+    low  = np.where(cdf_ <= alpha / 2)[0] # Индексы, где левый хвост <= alpha/2
+    high = np.where(sf_  <= alpha / 2)[0] # Индексы, где правый хвост <= alpha/2
+    k_low  = int(low[-1]) if low.size else None     # Берем самый правый индекс из левой зоны
+    k_high = int(high[0]) if high.size else None    # Берем самый левый индекс из правой зоны
     return k_low, k_high
 
+#Мощность — это вероятность того, что мы правильно отвергнем H0​, когда верна H1​. Мы берем границы, найденные при H0​,
+# и смотрим, какая доля вероятности при H1​ попадает в эти границы.
 def power(n, p0, p1, alpha):
     """Мощность = P(попасть в крит. область | H1)."""
     k_low, k_high = critical(n, p0, alpha)
@@ -109,6 +111,6 @@ al_grid = np.logspace(-3, np.log10(0.3), 40)
 ax[1].semilogx(al_grid, [power(n, p0, p1, a) for a in al_grid])
 ax[1].set(title="Мощность от alpha", xlabel="alpha", ylabel="1-beta (шанс поймать плохого стрелка)"); ax[1].grid(True)
 ax[2].plot(ns, pw_n); ax[2].axhline(target_power, color="r", ls="--")
-ax[2].set(title="Мощность от n", xlabel="n", ylabel="1-beta шанс (поймать плохого стрелка)"); ax[2].grid(True)
+ax[2].set(title="Мощность от n", xlabel="n", ylabel="1-beta (шанс поймать плохого стрелка)"); ax[2].grid(True)
 plt.tight_layout(); plt.savefig("task1_plot.png", dpi=120)
 print("\nГрафик сохранён: task1_plot.png")

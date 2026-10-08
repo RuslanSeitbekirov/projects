@@ -1,10 +1,9 @@
-# ПР-2, задание 2: проверка гипотезы об экспоненциальной аппроксимации (numpy + sympy + matplotlib)
 import numpy as np
 import sympy as sp
 from sympy.stats import FDistribution, cdf
 import matplotlib
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
 
 # ---------- ЭТАП 0. Данные и уровень значимости ----------
 y = np.array([1.7, -5.4, -4.0, -5.9, -1.6, 0.0, 0.6, 2.1, 0.1, -4.9,
