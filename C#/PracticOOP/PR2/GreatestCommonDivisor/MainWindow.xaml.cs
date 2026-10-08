@@ -14,28 +14,45 @@ namespace GreatestCommonDivisor;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
-{
-    public MainWindow()
+   public partial class MainWindow : Window
     {
-        InitializeComponent();
-    }
-
-    public static int NOD(int a, int b) // метод Евклида
-    {
-        if (a == 0) return b;
-        while (b != 0)
+        public MainWindow()
         {
-            if (a > b)
+            InitializeComponent();
+        }
+
+        private void BtnFindGcd_Click(object sender, RoutedEventArgs e)
+        {
+            // Пытаемся преобразовать текст из полей в числа
+            if (int.TryParse(InputA.Text, out int a) && int.TryParse(InputB.Text, out int b))
             {
-                a -= b;
+                // Считаем НОД (алгоритм Евклида), берем модули для отрицательных чисел
+                int gcd = CalculateGCD(Math.Abs(a), Math.Abs(b));
+                OutputResult.Text = gcd.ToString();
             }
             else
             {
-                b -= a;
+                OutputResult.Text = "Введите целые числа!";
             }
         }
-        return a;
+
+        // Метод вычисления НОД
+        public static int CalculateGCD(int a, int b)
+        {
+            if (a == 0) return b;
+            while (b != 0)
+            {
+                if (a > b)
+                {
+                    a -= b;
+                }
+                else
+                {
+                    b -= a;
+                }
+            }
+            return a;
+        }
     }
-}
+
 
