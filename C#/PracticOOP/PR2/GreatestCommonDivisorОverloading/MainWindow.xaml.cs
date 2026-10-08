@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Drawing;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -71,5 +72,39 @@ namespace GreatestCommonDivisorОverloading;
           return CalculateGCD(a, CalculateGCD(b, c, d, e));
         }
 
+        private void BtnFindGcd2_Click(object sender, RoutedEventArgs e)
+        {
+            string[] NumLine = Input2.Text.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries); //  — это значение перечисления в 
+                                                                                                                // C# (.NET), которое используется в 
+                                                                                                              // методе string.Split() для исключения 
+                                                                                                            // пустых строк из результирующего массива.
+            int len = NumLine.Length;
+            int[] num = new int[NumLine.Length];
+            for (int i = 0; i < len; i++)
+            {
+                if(!int.TryParse(NumLine[i], out int f))
+                {
+                    OutputResult2.Text = "Введённая строка содержит не число!";
+                    return;
+                }
+                num[i] = Math.Abs(f);
+            }
+            // Пытаемся преобразовать текст из полей в число
+            // Считаем НОД (алгоритм Евклида), берем модули для отрицательных чисел
+            int gcd = CalculateGCDline(num);
+            OutputResult2.Text = gcd.ToString();
+ 
+        }
 
+        public static int CalculateGCDline(int[] num)
+        {
+            if (num.Length == 0) return 0;
+            
+            int result = num[0];
+            for (int i = 1; i < num.Length; i++)
+            {
+                result = CalculateGCD(result, num[i]);
+            }
+            return result;
+        }
     }

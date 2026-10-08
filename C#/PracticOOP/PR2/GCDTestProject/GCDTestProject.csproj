@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GreatestCommonDivisor\GreatestCommonDivisor.csproj" />
     <ProjectReference Include="..\GreatestCommonDivisorОverloading\GreatestCommonDivisorОverloading.csproj" />
+    <ProjectReference Include="..\GreatestCommonDivisorStein\GreatestCommonDivisorStein.csproj" />
   </ItemGroup>
 
 </Project>
