@@ -67,9 +67,8 @@ public static class GCDAlgorithms
         // Шаги 4-5: оба нечётные -> gcd(u, v) = gcd((u - v)/2, v)
         do
         {
-            while ((v & 1) == 0)
-                v >>= 1;
-
+            while ((v & 1) == 0) v >>= 1;
+            
             if (u < v)
             {
                 v -= u;

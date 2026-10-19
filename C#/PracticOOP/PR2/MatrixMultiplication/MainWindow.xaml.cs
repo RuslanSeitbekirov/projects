@@ -1,4 +1,7 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -6,6 +9,7 @@ namespace MatrixMultiplication;
 
 public partial class MainWindow : Window
 {
+
     private const int MaxSize = 20; // ограничение размера в 20 на 20
 
     // Task 2: двумерные массивы. Как в методичке, первое измерение — столбцы,
