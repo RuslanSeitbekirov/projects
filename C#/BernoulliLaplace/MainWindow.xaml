@@ -1,0 +1,49 @@
+﻿<Window x:Class="BernoulliLaplace.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Формулы Бернулли и Лапласа"
+        Height="560" Width="620"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" TextWrapping="Wrap" Margin="0,0,0,10"
+                   Text="Проводится n независимых испытаний, вероятность успеха в каждом равна p."/>
+
+        <UniformGrid Grid.Row="1" Columns="5" Margin="0,0,0,12">
+            <StackPanel Margin="0,0,8,0">
+                <TextBlock Text="n (число испытаний)"/>
+                <TextBox x:Name="nTextBox" Padding="3" Text="400"/>
+            </StackPanel>
+            <StackPanel Margin="0,0,8,0">
+                <TextBlock Text="p (вероятность)"/>
+                <TextBox x:Name="pTextBox" Padding="3" Text="0.2"/>
+            </StackPanel>
+            <StackPanel Margin="0,0,8,0">
+                <TextBlock Text="k (ровно k успехов)"/>
+                <TextBox x:Name="kTextBox" Padding="3" Text="80"/>
+            </StackPanel>
+            <StackPanel Margin="0,0,8,0">
+                <TextBlock Text="k1 (от)"/>
+                <TextBox x:Name="k1TextBox" Padding="3" Text="70"/>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Text="k2 (до)"/>
+                <TextBox x:Name="k2TextBox" Padding="3" Text="90"/>
+            </StackPanel>
+        </UniformGrid>
+
+        <Button Grid.Row="2" x:Name="calculateButton" Content="Вычислить"
+                Padding="20,5" FontWeight="Bold" HorizontalAlignment="Left"
+                Margin="0,0,0,12" Click="calculateButton_Click"/>
+
+        <TextBox Grid.Row="3" x:Name="resultTextBox" IsReadOnly="True"
+                 FontFamily="Consolas" FontSize="13" TextWrapping="Wrap"
+                 VerticalScrollBarVisibility="Auto"/>
+    </Grid>
+</Window>
