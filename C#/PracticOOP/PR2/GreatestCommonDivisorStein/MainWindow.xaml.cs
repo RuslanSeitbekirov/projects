@@ -14,7 +14,7 @@ public partial class MainWindow : Window
         // убирает время на компиляцию методов из итого подсчета времени 
         GCDAlgorithms.FindGCDEuclid(48, 18, out _);
         GCDAlgorithms.FindGCDStein(48, 18, out _);
-    }
+    } 
 
     // ===================================================================
     // Вкладка 1. Сравнение алгоритмов Евклида и Штейна
