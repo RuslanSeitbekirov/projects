@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cctype>
-
+ 
 
 struct Complex{
   double re;  // Действительная часть
