@@ -1,0 +1,35 @@
+﻿<Window x:Class="TestHarness.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Испытание балок на прочность"
+        Height="360" Width="560"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Grid.Row="0" Grid.Column="0" Header="Material" Margin="0,0,5,0">
+            <ListBox x:Name="materials" SelectionChanged="selectionChanged"/>
+        </GroupBox>
+
+        <GroupBox Grid.Row="0" Grid.Column="1" Header="CrossSection" Margin="5,0,5,0">
+            <ListBox x:Name="crosssections" SelectionChanged="selectionChanged"/>
+        </GroupBox>
+
+        <GroupBox Grid.Row="0" Grid.Column="2" Header="Result" Margin="5,0,0,0">
+            <ListBox x:Name="testresults" SelectionChanged="selectionChanged"/>
+        </GroupBox>
+
+        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+               x:Name="testDetails" Margin="0,12,0,0"
+               FontSize="14" FontWeight="Bold"
+               Content="Выберите по одному значению из каждого списка"/>
+    </Grid>
+</Window>
