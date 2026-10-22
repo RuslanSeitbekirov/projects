@@ -1,16 +1,5 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
+﻿using System.Windows;
 namespace GreatestCommonDivisor;
-
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
@@ -20,7 +9,6 @@ namespace GreatestCommonDivisor;
         {
             InitializeComponent();
         }
-
         private void BtnFindGcd_Click(object sender, RoutedEventArgs e)
         {
             // Пытаемся преобразовать текст из полей в числа
@@ -35,7 +23,6 @@ namespace GreatestCommonDivisor;
                 OutputResult.Text = "Введите целые числа!";
             }
         }
-
         // Метод вычисления НОД
         public static int CalculateGCD(int a, int b)
         {
@@ -54,5 +41,3 @@ namespace GreatestCommonDivisor;
             return a;
         }
     }
-
-
