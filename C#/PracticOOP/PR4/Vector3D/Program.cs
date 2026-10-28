@@ -39,6 +39,4 @@ Console.WriteLine($"Ω = {omega} рад/с");
 Console.WriteLine($"v = {velocity} м/с");
 Console.WriteLine($"F = {force} Н");
 Console.WriteLine($"|F| = {force.Length:F4} Н");
-Console.WriteLine(force.X < 0
-    ? "Направление: на запад (вправо по ходу движения)"
-    : "Направление: на восток");
+Console.WriteLine(force.X < 0 ? "Направление: на запад (вправо по ходу движения)" : "Направление: на восток");
