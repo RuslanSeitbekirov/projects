@@ -18,7 +18,7 @@
         catch
         {
         Console.WriteLine("Неизвестная ошибка. Перезапустите программу");
-        throw;
+        throw ;
         }
         finally
         {

@@ -5,7 +5,7 @@ System.Console.WriteLine(number*2);
 // Важно: checked влияет только на арифметику, записанную прямо внутри 
 // блока, а не на код вызываемых из него методов.
 try
-{
+{ 
     checked
     {
         System.Console.WriteLine(number*2);

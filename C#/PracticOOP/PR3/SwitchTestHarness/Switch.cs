@@ -108,7 +108,7 @@ public class CoreTemperatureReadException : Exception
 {
     public CoreTemperatureReadException(string message) : base(message) { }
 }
-
+ 
 public class CoreRadiationLevelReadException : Exception
 {
     public CoreRadiationLevelReadException(string message) : base(message) { }

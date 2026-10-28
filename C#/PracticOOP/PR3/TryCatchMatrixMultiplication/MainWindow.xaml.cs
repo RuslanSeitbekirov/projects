@@ -8,7 +8,7 @@ using System.Windows.Navigation;
 //Task 2 реализован
 //Task 3 проверка Task 2 на ловлю ошибок
 //Task 4 Создание ситуаци вылета программы
-
+ 
 
 namespace MatrixMultiplication;
 

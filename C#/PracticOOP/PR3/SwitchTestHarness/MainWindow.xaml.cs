@@ -84,7 +84,7 @@ public partial class MainWindow : Window
         {
             double temp = sd.GetCoreTemperature();
             textBlock1.Text += $"Step 6 - Core temperature after shutdown: {temp:F1}\n";
-        }
+        } 
         catch (CoreTemperatureReadException ex)
         {
             textBlock1.Text += "*** Exception in step 6: " + ex.Message + "\n";
