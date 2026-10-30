@@ -4,7 +4,7 @@ namespace Vectors3D;
 
 /// <summary>Трёхмерный вектор (X, Y, Z).</summary>
 public readonly struct Vector3D
-{
+{   // из вне поля только для чтения
     public double X { get; }
     public double Y { get; }
     public double Z { get; }
@@ -14,7 +14,7 @@ public readonly struct Vector3D
         X = x;
         Y = y;
         Z = z;
-    }
+    } 
 
     // ---- Модуль вектора (свойство только для чтения) ----
     public double Length => Math.Sqrt(X * X + Y * Y + Z * Z);
@@ -35,11 +35,11 @@ public readonly struct Vector3D
     public static double operator *(Vector3D a, Vector3D b)
         => a.X * b.X + a.Y * b.Y + a.Z * b.Z;
 
-    // Вектор * число (справа) и число * вектор (слева)
+    // Вектор * число (справа) и число * вектор (слева) = Vector3D 
     public static Vector3D operator *(Vector3D a, double k)
         => new(a.X * k, a.Y * k, a.Z * k);
 
-    public static Vector3D operator *(double k, Vector3D a) => a * k;
+    public static Vector3D operator *(double k, Vector3D a) => a * k; // вызовет предыдущую перегрузку но в другом порядке
 
     // ---- Деление ----
 

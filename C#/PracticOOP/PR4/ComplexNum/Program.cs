@@ -9,7 +9,7 @@ var z2 = new Complex(3, -1);   // 3 - i
 Console.WriteLine($"z1 = {z1},  |z1| = {z1.Modulus:F4}");
 Console.WriteLine($"z2 = {z2},  |z2| = {z2.Modulus:F4}");
 Console.WriteLine();
-
+ 
 // ---- Арифметика в прямоугольной форме ----
 Console.WriteLine($"z1 + z2 = {z1 + z2}");
 Console.WriteLine($"z1 - z2 = {z1 - z2}");

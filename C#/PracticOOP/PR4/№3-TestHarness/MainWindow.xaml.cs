@@ -19,6 +19,8 @@ public partial class MainWindow : Window
 
     private void selectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        // О внесении изменений сообщает WPF через событие SelectionChanged в файле разметки
+
         // Пока выбраны не все три значения, выводить нечего
         if (materials.SelectedItem == null ||
             crosssections.SelectedItem == null ||
@@ -82,6 +84,7 @@ public partial class MainWindow : Window
         }
 
         // Task 4, шаг 5: результат выводится в Content метки testDetails
+        // при смене выбыра элемента перечисления строка пересобирается полностью 
         testDetails.Content = selectionStringBuilder.ToString();
     }
 }

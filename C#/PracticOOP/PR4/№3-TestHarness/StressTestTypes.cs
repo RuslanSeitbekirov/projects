@@ -12,7 +12,7 @@ public enum Material
 
 /// <summary>Сечения балок.</summary>
 public enum CrossSection
-{
+{ 
     IBeam,
     Box,
     ZShaped,

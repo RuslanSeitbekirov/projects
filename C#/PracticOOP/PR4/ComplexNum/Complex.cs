@@ -26,7 +26,7 @@ public readonly struct Complex
 
     public static Complex operator -(Complex a, Complex b)
         => new(a.Re - b.Re, a.Im - b.Im);
-
+ 
     // (a+bi)(c+di) = (ac − bd) + (ad + bc)i
     public static Complex operator *(Complex a, Complex b)
         => new(a.Re * b.Re - a.Im * b.Im,
