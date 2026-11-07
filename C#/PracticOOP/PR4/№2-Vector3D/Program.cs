@@ -5,11 +5,11 @@ Console.OutputEncoding = Encoding.UTF8;
 
 // ===== Проверка операций =====
 var a = new Vector3D(1, 2, 3);
-var b = new Vector3D(4, 5, 6);
+var b = new Vector3D(4, 5, 6); 
 
 Console.WriteLine($"a = {a}, |a| = {a.Length:F4}");
 Console.WriteLine($"b = {b}, |b| = {b.Length:F4}");
-Console.WriteLine($"a + b = {a + b}");
+Console.WriteLine($"a + b = {a + b}"); 
 Console.WriteLine($"a - b = {a - b}");
 Console.WriteLine($"a * b (скалярное) = {a * b}");
 Console.WriteLine($"a / b (покомпонентно) = {a / b}");

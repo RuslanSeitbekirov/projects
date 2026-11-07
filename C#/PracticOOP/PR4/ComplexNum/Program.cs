@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using ComplexNumbers;
+using ComplexNumbers; 
 
 Console.OutputEncoding = Encoding.UTF8;   // чтобы корректно выводились знаки · и ·
 
@@ -16,7 +16,7 @@ Console.WriteLine($"z1 - z2 = {z1 - z2}");
 Console.WriteLine($"z1 * z2 = {z1 * z2}");
 Console.WriteLine($"z1 / z2 = {z1 / z2}");
 Console.WriteLine($"z1 == z2: {z1 == z2},  z1 != z2: {z1 != z2}");
-Console.WriteLine();
+Console.WriteLine(); 
 
 // ---- Проверка: (2+i)*(3-i) через экспоненциальную форму ----
 // Умножение в экспоненциальной форме: модули перемножаются, аргументы складываются.

@@ -12,7 +12,7 @@ public static class TestManager
         "Fatigue failure after cyclic loading",
         "Material defect found during inspection"
     };
-
+ 
     /// <summary>Возвращает результат одного испытания (случайно).</summary>
     public static TestCaseResult GenerateResult()
     {

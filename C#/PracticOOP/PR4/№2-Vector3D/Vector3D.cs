@@ -11,7 +11,7 @@ public readonly struct Vector3D
 
     public Vector3D(double x, double y, double z)
     {
-        X = x;
+        X = x; 
         Y = y;
         Z = z;
     } 
@@ -67,11 +67,12 @@ public readonly struct Vector3D
     // ---- Сравнение ----
     public static bool operator ==(Vector3D a, Vector3D b)
         => a.X == b.X && a.Y == b.Y && a.Z == b.Z;
-
+ 
     public static bool operator !=(Vector3D a, Vector3D b) => !(a == b);
-
+    
+    // Оператор == видит только ваш код. А стандартные коллекции и методы .NET про него ничего не знают и вызывают именно Equals
     public override bool Equals(object? obj) => obj is Vector3D v && this == v;
-
+    //Кроме того, компилятор выдаёт предупреждение CS0660, если перегрузить == и не переопределить Equals
     public override int GetHashCode() => HashCode.Combine(X, Y, Z);
 
     // ---- Вывод ----

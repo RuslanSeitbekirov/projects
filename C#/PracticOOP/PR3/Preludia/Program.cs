@@ -2,9 +2,9 @@
 {
     try
     {
-        int i = 0;
-        int x = 5;
-        int y = x / i;
+        double i = 0;
+        double x = 5;
+        double y = x / i;
         Console.WriteLine("x={0}, y= {1}", x, y);
         }
         catch (System.DivideByZeroException e)

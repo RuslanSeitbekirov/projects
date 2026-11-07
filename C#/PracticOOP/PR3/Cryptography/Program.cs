@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-string fio = "Сеитбкиров,Руслан,Эмилевич";   // фамилия, имя, отчество через запятые
+string fio = "Фролов,Егор,Чмобович";   // фамилия, имя, отчество через запятые
 
 // 3. Строка -> байты (UTF-8, иначе кириллица закодируется неверно)
 byte[] data = Encoding.UTF8.GetBytes(fio);

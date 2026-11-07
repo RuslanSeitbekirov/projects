@@ -1,7 +1,7 @@
 namespace StressTest;
 
 /// <summary>Материалы балок.</summary>
-public enum Material { StainlessSteel, Aluminum, ReinforcedConcrete, Composite, Titanium }
+public enum Material { StainlessSteel = 2, Aluminum, ReinforcedConcrete, Composite = 2, Titanium }
 
 /// <summary>Сечения балок.</summary>
 public enum CrossSection { IBeam, Box, ZShaped, CShaped }
@@ -11,7 +11,7 @@ public enum TestResult { Pass, Fail }
 
 /// <summary>Результат одного испытания на прочность.</summary>
 public struct TestCaseResult
-{
+{ 
     /// <summary>Итог испытания.</summary>
     public TestResult Result;
 

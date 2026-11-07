@@ -13,7 +13,7 @@ public readonly struct Complex
     public Complex(double re, double im)
     {
         Re = re;
-        Im = im;
+        Im = im; 
     }
 
     // ---- Модуль и аргумент (свойства только для чтения) ----
@@ -48,18 +48,19 @@ public readonly struct Complex
         => a.Re == b.Re && a.Im == b.Im;
 
     public static bool operator !=(Complex a, Complex b) => !(a == b);
-
+    // Оператор == видит только ваш код. А стандартные коллекции и методы .NET про него ничего не знают и вызывают именно Equals
     public override bool Equals(object? obj) => obj is Complex c && this == c;
 
     public override int GetHashCode() => HashCode.Combine(Re, Im);
 
     /// <summary>Сравнение с допуском: нужно после вычислений с тригонометрией,
     /// где получаются числа вроде 7,000000000000001.</summary>
+    /// чтобы остаток проверялся только до 9 знака
     public bool ApproxEquals(Complex other, double eps = Eps)
         => Math.Abs(Re - other.Re) < eps && Math.Abs(Im - other.Im) < eps;
 
     // ---- Вывод ----
-    public override string ToString()
+    public override string ToString() //объеденяет целое и мнииое в одну строку
     {
         string re = Re.ToString("0.####", CultureInfo.CurrentCulture);
         string im = Math.Abs(Im).ToString("0.####", CultureInfo.CurrentCulture);
