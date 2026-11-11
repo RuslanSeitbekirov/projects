@@ -1,0 +1,144 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Lab5_Task1: ConsoleTest (консоль)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab5_Task1",
+      "program": "${workspaceFolder}/PR5/Lab5_Task1/ConsoleTest/bin/Debug/net10.0/ConsoleTest.dll",
+      "cwd": "${workspaceFolder}/PR5/Lab5_Task1/ConsoleTest",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Lab5_Task1: Exercise2TestHarness (WPF-окно)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab5_Task1",
+      "program": "${workspaceFolder}/PR5/Lab5_Task1/Exercise2TestHarness/bin/Debug/net10.0-windows/Exercise2TestHarness.dll",
+      "cwd": "${workspaceFolder}/PR5/Lab5_Task1/Exercise2TestHarness"
+    },
+    {
+      "name": "Lab5_Task2: ConsoleTest (консоль)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab5_Task2",
+      "program": "${workspaceFolder}/PR5/Lab5_Task2/ConsoleTest/bin/Debug/net10.0/ConsoleTest.dll",
+      "cwd": "${workspaceFolder}/PR5/Lab5_Task2/ConsoleTest",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Lab5_Task2: Exercise2TestHarness (WPF-окно)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab5_Task2",
+      "program": "${workspaceFolder}/PR5/Lab5_Task2/Exercise2TestHarness/bin/Debug/net10.0-windows/Exercise2TestHarness.dll",
+      "cwd": "${workspaceFolder}/PR5/Lab5_Task2/Exercise2TestHarness"
+    },
+    {
+      "name": "Lab5_Task3: BookStore (книжный магазин)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab5_Task3",
+      "program": "${workspaceFolder}/PR5/Lab5_Task3/BookStore/bin/Debug/net10.0/BookStore.dll",
+      "cwd": "${workspaceFolder}/PR5/Lab5_Task3/BookStore",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Lab6_Task1: Monitor (события)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab6_Task1",
+      "program": "${workspaceFolder}/PR6/Lab6_Task1/Monitor/bin/Debug/net10.0-windows/Monitor.dll",
+      "cwd": "${workspaceFolder}/PR6/Lab6_Task1/Monitor"
+    },
+    {
+      "name": "Lab6_Task2: Monitor (лямбда-выражения, HeartBeat)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab6_Task2",
+      "program": "${workspaceFolder}/PR6/Lab6_Task2/Monitor/bin/Debug/net10.0-windows/Monitor.dll",
+      "cwd": "${workspaceFolder}/PR6/Lab6_Task2/Monitor"
+    },
+    {
+      "name": "Lab6_Task3: ThreadsDemo (многопоточность)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab6_Task3",
+      "program": "${workspaceFolder}/PR6/Lab6_Task3/ThreadsDemo/bin/Debug/net10.0-windows/ThreadsDemo.dll",
+      "cwd": "${workspaceFolder}/PR6/Lab6_Task3/ThreadsDemo"
+    },
+    {
+      "name": "Lab7_Task1: FilesDemo (файлы)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab7_Task1",
+      "program": "${workspaceFolder}/PR7/Lab7_Task1/FilesDemo/bin/Debug/net10.0/FilesDemo.dll",
+      "cwd": "${workspaceFolder}/PR7/Lab7_Task1/FilesDemo",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Lab7_Task2: ClassRelations (отношения классов)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab7_Task2",
+      "program": "${workspaceFolder}/PR7/Lab7_Task2/ClassRelations/bin/Debug/net10.0/ClassRelations.dll",
+      "cwd": "${workspaceFolder}/PR7/Lab7_Task2/ClassRelations",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Lab7_Task4: DesignPatterns (9 паттернов)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab7_Task4",
+      "program": "${workspaceFolder}/PR7/Lab7_Task4/DesignPatterns/bin/Debug/net10.0/DesignPatterns.dll",
+      "cwd": "${workspaceFolder}/PR7/Lab7_Task4/DesignPatterns",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Lab7_Task5: SolidPrinciples (SOLID)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab7_Task5",
+      "program": "${workspaceFolder}/PR7/Lab7_Task5/SolidPrinciples/bin/Debug/net10.0/SolidPrinciples.dll",
+      "cwd": "${workspaceFolder}/PR7/Lab7_Task5/SolidPrinciples",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Lab8_Task1: CollectionsDemo (коллекции)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab8_Task1",
+      "program": "${workspaceFolder}/PR8/Lab8_Task1/CollectionsDemo/bin/Debug/net10.0/CollectionsDemo.dll",
+      "cwd": "${workspaceFolder}/PR8/Lab8_Task1/CollectionsDemo",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Lab8_Task2: DictionariesDemo (словарь, индексатор)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab8_Task2",
+      "program": "${workspaceFolder}/PR8/Lab8_Task2/DictionariesDemo/bin/Debug/net10.0/DictionariesDemo.dll",
+      "cwd": "${workspaceFolder}/PR8/Lab8_Task2/DictionariesDemo",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Lab8_Task3: LinqDemo (LINQ)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab8_Task3",
+      "program": "${workspaceFolder}/PR8/Lab8_Task3/LinqDemo/bin/Debug/net10.0/LinqDemo.dll",
+      "cwd": "${workspaceFolder}/PR8/Lab8_Task3/LinqDemo",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Lab8_Task4: JsonDemo (JSON)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build Lab8_Task4",
+      "program": "${workspaceFolder}/PR8/Lab8_Task4/JsonDemo/bin/Debug/net10.0/JsonDemo.dll",
+      "cwd": "${workspaceFolder}/PR8/Lab8_Task4/JsonDemo",
+      "console": "integratedTerminal"
+    }
+  ]
+}

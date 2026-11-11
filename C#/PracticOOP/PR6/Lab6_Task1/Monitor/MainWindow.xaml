@@ -1,0 +1,65 @@
+<Window x:Class="Monitor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Практика 6, задание 1 — события (MeasureMassDevice)"
+        Height="430" Width="520" MinHeight="380" MinWidth="440"
+        WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing">
+
+    <Grid Margin="12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="170"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Левая колонка: кнопки -->
+        <StackPanel Grid.Column="0" Margin="0,0,12,0">
+            <!-- Click="..." — подписка на событие кнопки прямо в разметке -->
+            <Button x:Name="startCollecting" Content="Start Collecting"
+                    Click="startCollecting_Click" Padding="8,4" Margin="0,0,0,6"/>
+            <Button x:Name="stopCollecting" Content="Stop Collecting"
+                    Click="stopCollecting_Click" Padding="8,4" IsEnabled="False"/>
+        </StackPanel>
+
+        <!-- Правая колонка: значения. Кнопок "Get..." больше нет —
+             поля обновляются сами, когда устройство вызывает событие. -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Content="Most Recent Measure:"/>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="mostRecentMeasureBox"
+                     IsReadOnly="True" Margin="0,4" VerticalContentAlignment="Center"/>
+
+            <Label Grid.Row="1" Content="Metric Value (кг):"/>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="metricValueBox"
+                     IsReadOnly="True" Margin="0,4" VerticalContentAlignment="Center"/>
+
+            <Label Grid.Row="2" Content="Imperial Value (фунт):"/>
+            <TextBox Grid.Row="2" Grid.Column="1" x:Name="imperialValueBox"
+                     IsReadOnly="True" Margin="0,4" VerticalContentAlignment="Center"/>
+
+            <Label Grid.Row="3" Grid.ColumnSpan="2" Content="Raw Data (10 последних измерений):"
+                   Margin="0,8,0,0"/>
+            <ListBox Grid.Row="4" Grid.ColumnSpan="2" x:Name="rawDataValues"/>
+        </Grid>
+
+        <!-- Строка состояния -->
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" x:Name="statusText"
+                   Margin="0,10,0,0" Foreground="Gray" TextWrapping="Wrap"
+                   Text="Нажмите Start Collecting."/>
+    </Grid>
+</Window>

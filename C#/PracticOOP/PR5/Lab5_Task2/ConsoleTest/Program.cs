@@ -6,7 +6,7 @@ using MeasuringDevice;
 namespace ConsoleTest
 {
     /// <summary>
-    /// Консольное тестовое приложение для класса MeasureLengthDevice.
+    /// Консольное тестовое приложение для класса MeasureLengthDevice. 
     /// Пункты меню повторяют кнопки WPF-окна из методички (Task 4–5).
     /// </summary>
     internal class Program

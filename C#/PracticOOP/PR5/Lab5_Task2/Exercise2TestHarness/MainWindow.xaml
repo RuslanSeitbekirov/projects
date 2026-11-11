@@ -68,12 +68,10 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" x:Name="metricLabel" Content="Metric Value:"/>
-...
-            <Label Grid.Row="1" x:Name="imperialLabel" Content="Imperial Value:"/>
             <TextBox Grid.Row="0" Grid.Column="1" x:Name="metricValueBox"
                      IsReadOnly="True" Margin="0,4" VerticalContentAlignment="Center"/>
 
-            
+            <Label Grid.Row="1" x:Name="imperialLabel" Content="Imperial Value:"/>
             <TextBox Grid.Row="1" Grid.Column="1" x:Name="imperialValueBox"
                      IsReadOnly="True" Margin="0,4" VerticalContentAlignment="Center"/>
 
