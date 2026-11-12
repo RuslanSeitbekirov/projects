@@ -11,7 +11,7 @@ namespace BookStore
     /// <summary>Любой товар магазина.</summary>
     public interface IProduct
     {
-        string Title { get; }
+        string Title { get; } 
         decimal Price { get; }
     }
 
