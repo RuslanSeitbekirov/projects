@@ -1,6 +1,5 @@
 using System;
-using DeviceControl;   // Task 3, шаг 5: пространство имён эмулятора устройства
-
+using DeviceControl;
 namespace MeasuringDevice
 {
     /// <summary>
@@ -16,7 +15,7 @@ namespace MeasuringDevice
         // ------------------------------------------------------------------
 
         /// <summary>Единицы, в которых устройство выдаёт данные.</summary>
-        private Units unitsToUse;
+        private Units unitsToUse; //enum поле устанавливает еденицу измерения
 
         /// <summary>
         /// Кольцевой буфер на 10 измерений. Когда буфер заполнен,
@@ -38,7 +37,7 @@ namespace MeasuringDevice
         private const DeviceType measurementType = DeviceType.LENGTH;
 
         // ------------------------------------------------------------------
-        //  Конструктор (Task 3, шаг 16)
+        //  Конструктор 
         // ------------------------------------------------------------------
 
         /// <summary>
@@ -96,14 +95,14 @@ namespace MeasuringDevice
         }
 
         /// <summary>
-        /// Запускает устройство (Task 3, шаги 8–9):
+        /// Запускает устройство:
         /// создаём контроллер статическим фабричным методом StartDevice
         /// и запускаем фоновый сбор измерений.
         /// </summary>
         public void StartCollecting()
         {
             // Защита от повторного запуска: если сбор уже идёт —
-            // сначала корректно останавливаем старый (дополнение к методичке)
+            // сначала корректно останавливаем старый
             if (controller != null)
             {
                 StopCollecting();
@@ -151,7 +150,6 @@ namespace MeasuringDevice
             // Запоминаем контроллер ЭТОГО сеанса сбора. Если пользователь
             // остановит и снова запустит устройство, старый поток увидит,
             // что контроллер сменился, и завершится, не мешая новому
-            // (небольшое улучшение кода из методички).
             DeviceController sessionController = controller;
             int[] buffer = dataCaptured;
 
