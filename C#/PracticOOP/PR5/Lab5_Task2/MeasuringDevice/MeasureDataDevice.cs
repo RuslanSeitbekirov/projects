@@ -12,7 +12,7 @@ namespace MeasuringDevice
     /// </summary>
     public abstract class MeasureDataDevice : IMeasuringDevice
     {
-        // Поля сделаны protected (Task 5, шаг 12): они видны наследникам,
+        // Поля сделаны protected: они видны наследникам,
         // но скрыты от внешнего кода.
 
         /// <summary>Единицы, в которых устройство выдаёт данные.</summary>
@@ -29,7 +29,7 @@ namespace MeasuringDevice
 
         /// <summary>
         /// Тип измерения. Уже НЕ const и не инициализирован при объявлении
-        /// (Task 5, шаг 13): значение задаёт конструктор наследника.
+        /// значение задаёт конструктор наследника.
         /// </summary>
         protected DeviceType measurementType;
 

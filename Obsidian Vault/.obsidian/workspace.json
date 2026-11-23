@@ -53,12 +53,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "C#/Теория по пратическим/PR6/Lab6_Task1.md",
+                "file": "C#/Функции и классы.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Lab6_Task1"
+              "title": "Функции и классы"
             }
           }
         ],
@@ -249,9 +249,10 @@
   },
   "active": "ca1cee6ef4c51b4a",
   "lastOpenFiles": [
-    "C#/Функции и классы.md",
     "C#/Типы данных. Преобразование и действия с ними.md",
     "C#/Обработчик ошибок Try - catch.md",
+    "C#/Теория по пратическим/PR6/Lab6_Task1.md",
+    "C#/Функции и классы.md",
     "C#/Ввод и вывод..md",
     "КОнспект.md",
     "Pasted image 20260823221107.png",

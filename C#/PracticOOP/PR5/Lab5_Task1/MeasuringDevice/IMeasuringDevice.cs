@@ -15,7 +15,7 @@ namespace MeasuringDevice
         /// </summary>
         /// <returns>The latest measurement from the device converted to metric units.</returns>
         decimal MetricValue();
-
+        
         /// <summary>
         /// Converts the raw data collected by the measuring device into an imperial value.
         /// Переводит последнее измерение в имперские единицы.
